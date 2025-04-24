@@ -30,7 +30,7 @@ const offer = () => {
               <li className='mb-3'><AiOutlineCheck className='inline text-primary text-xl'/>Usually MP3 File available</li>
             </ul>
 
-            <a href="/midrangetrack " className="mt-5 w-full">
+            <a href="/tracks/FreeForProfit " className="mt-5 w-full">
               <button className='btn duration-300 ease-in-out hover:bg-white/90 hover:brightness-90 bg-white p-4 w-full text-black mt-6 rounded-xl'> Explore Beats</button>
             </a>
 

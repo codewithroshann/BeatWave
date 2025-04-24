@@ -20,12 +20,14 @@ interface Beat {
   price: number
   image: string
   audio: string
+  count:number
 }
 
 interface BeatCardProps {
   beat: Beat
   isBeatPlaying: boolean
   onPlayPause: () => void
+
 }
 
 export function BeatCard({ beat,isBeatPlaying }: BeatCardProps) {
@@ -111,10 +113,10 @@ export function BeatCard({ beat,isBeatPlaying }: BeatCardProps) {
           </div> */}
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex justify-between items-center">
+      <CardFooter className="p-4 pt-0 flex flex-col sm:flex-row sm:items-center sm:gap-0  justify-between items-start gap-4 ">
         <div className="font-bold">${beat.price}</div>
         <Button size="sm" className="gap-1">
-          <ShoppingCart className="h-4 w-4" />
+          <ShoppingCart className="h-4 w-4 " />
           Add to Cart
         </Button>
       </CardFooter>

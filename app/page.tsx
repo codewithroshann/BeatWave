@@ -19,7 +19,7 @@ export default function Home() {
         </div>
         <div className="container px-4 py-12 mx-auto">
           <h2 className="text-3xl font-bold tracking-tight mb-6">Featured  <span className="text-primary">Beats</span></h2>
-          <BeatList />
+          <BeatList count={6}/>
         </div>
         {/* Beat Store Web App Marquee */}
         <div className="w-full px-4 container py-12 ">

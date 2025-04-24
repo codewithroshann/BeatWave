@@ -33,9 +33,9 @@ export function Header() {
                 <Link href="/trending" className="text-base font-medium transition-colors hover:text-primary">
                   Trending
                 </Link>
-                {/* <Link href="#" className="text-base font-medium transition-colors hover:text-primary">
-                  Sell Beats
-                </Link> */}
+                <Link href="/auth/admin/ControlPanel" className="text-base font-medium transition-colors hover:text-primary">
+                  Control Panel
+                </Link>
               </nav>
             </SheetContent>
           </Sheet>
@@ -55,9 +55,9 @@ export function Header() {
           <Link href="/trending" className="text-sm font-medium transition-colors hover:text-primary">
             Trending
           </Link>
-          {/* <Link href="#" className="text-sm font-medium transition-colors hover:text-primary">
-            Sell Beats
-          </Link> */}
+          <Link href="/auth/admin/controlpanel" className="text-sm font-medium transition-colors hover:text-primary">
+                  Control Panel
+                </Link>
         </nav>
         
 

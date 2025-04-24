@@ -8,7 +8,7 @@ import Head from "next/head"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "BeatMarket - Premium Beats Marketplace",
+  title: "BeatWave - Premium Beats Marketplace",
   description: "Find and purchase premium beats from top producers worldwide.",
   generator: 'v0.dev',
   icons: {
