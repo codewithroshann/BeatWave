@@ -4,7 +4,7 @@ import { useState } from "react"
 import { BeatCard } from "@/components/beat-card"
 
 // Mock data for beats
-export const BEATS = [
+const BEATS = [
   {
     id: "1",
     title: "Night Rider",
@@ -160,6 +160,18 @@ export const BEATS = [
 
 export function BeatList({ count }: { count: number }) {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null)
+
+// //Beats suffle function
+//   function shuffleArray(array:any) {
+//     const shuffled = [...array]; // create a copy to avoid mutating the original
+//     for (let i = shuffled.length - 1; i > 0; i--) {
+//       const j = Math.floor(Math.random() * (i + 1));
+//       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+//     }
+//     return shuffled;
+//   }
+//   const SHUFFLED_BEATS = shuffleArray(BEATS);
+
 
   const handlePlayPause = (beatId: string) => {
     if (currentlyPlaying === beatId) {

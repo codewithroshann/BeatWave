@@ -1,5 +1,4 @@
-"use client"
-
+"Use Client"
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Play, Pause, ShoppingCart, Headphones } from "lucide-react"
@@ -64,12 +63,6 @@ export function BeatCard({ beat,isBeatPlaying }: BeatCardProps) {
       }
     }
   };
- 
-
-
-
-
-
 
   return (
     <Card

@@ -10,6 +10,15 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const[open,setOpen]=useState("hidden")
+
+  const panelOpen=()=>{
+    if(open=="hidden"){
+    setOpen("block")
+    }else{
+      setOpen("hidden")
+    }
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -46,16 +55,16 @@ export function Header() {
         </div>
 
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="/" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="/" className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-primary/80">
             Home
           </Link>
-          <Link href="/explore" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="/explore" className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-primary/80">
             Explore
           </Link>
-          <Link href="/trending" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="/trending" className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-primary/80 ">
             Trending
           </Link>
-          <Link href="/auth/admin/controlpanel" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="/auth/admin/controlpanel" className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-primary/80 ">
                   Control Panel
                 </Link>
         </nav>
@@ -90,8 +99,14 @@ export function Header() {
             <span className="sr-only">Cart</span>
           </Button>
 
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" className="relative" onClick={panelOpen}>
             <User className="h-5 w-5" />
+            <div className={`flex  flex-col absolute bottom-[-100px] bg-zinc-800 rounded-md w-[100px] py-2 px-3 right-[2px]  ${open}`}>
+            <a href="/auth/user/login" className="p-2 text-mb">Login</a>
+            <a href="/auth/user/signup" className="p-2 text-mb border-t-2 border-primary">SignUp</a>
+
+            </div>
+              
             <span className="sr-only">Account</span>
           </Button>
         </div>
