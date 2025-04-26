@@ -4,6 +4,8 @@ import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import FavIcon from "@/public/favicons/favicon-32x32.png"
+import IosFavIcon from "@/public/favicons/apple-touch-icon.png"
 import Head from "next/head"
 const inter = Inter({ subsets: ["latin"] })
 
@@ -13,11 +15,11 @@ export const metadata = {
   generator: 'v0.dev',
   icons: {
     // “icon” will be used for <link rel="icon">
-    icon: '../favicons/favicon-32x32.png',
+    icon: FavIcon.src,
     // “shortcut” is fallback for some browsers
-    shortcut: '../favicons/favicon-32x32.png',
+    shortcut: FavIcon.src,
     // if you have an Apple-touch icon:
-    apple: '../favicons/apple-touch-icon.png',
+    apple: IosFavIcon.src,
   },
   }
 

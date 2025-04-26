@@ -7,11 +7,13 @@ import { Search, ShoppingCart, Menu, X, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import Logo from "@/public/favicons/android-chrome-512x512.png"
 
 
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const[open,setOpen]=useState("hidden")
+ 
 
   const panelOpen=()=>{
     if(open=="hidden"){
@@ -50,7 +52,7 @@ export function Header() {
             </SheetContent>
           </Sheet>
           <Link href="/" className="flex items-center gap-2">
-            <img src="../favicons/apple-touch-icon.png" alt=""className="hidden md:inline-block h-9 w-9  rounded-full" />
+            <img src={Logo.src} alt=""className="hidden md:inline-block h-9 w-9  rounded-full" />
             <span className="font-bold text-xl">BeatWave</span>
           </Link>
         </div>

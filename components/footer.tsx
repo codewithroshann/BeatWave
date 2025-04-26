@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Facebook, Twitter, Instagram, Youtube, Headphones, Mail } from "lucide-react"
+import Logo from "@/public/favicons/android-chrome-512x512.png"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,7 +12,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <div>
             <div className="flex items-center gap-2">
-            <img src="../favicons/apple-touch-icon.png" alt=""className="hidden md:inline-block h-9 w-9  rounded-full" />
+            <img src={Logo.src} alt=""className="hidden md:inline-block h-9 w-9  rounded-full" />
               <span className="font-bold text-xl">BeatWave</span>
             </div>
             <p className="mt-4 text-sm text-muted-foreground max-w-xs">
