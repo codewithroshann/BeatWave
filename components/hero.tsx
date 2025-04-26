@@ -20,9 +20,11 @@ export function Hero() {
           Explore thousands of high-quality beats from top producers worldwide
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button size="lg" className="bg-primary hover:bg-primary/90">
+          <a href="/explore">
+          <Button size="lg"  className="bg-primary hover:bg-primary/90">
             Browse Beats
           </Button>
+          </a>
           {/* <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
             Sell Your Beats
           </Button> */}
