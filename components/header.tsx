@@ -45,6 +45,9 @@ export function Header() {
                 <Link href="/trending" className="text-base font-medium transition-colors hover:text-primary">
                   Trending
                 </Link>
+                <Link href="/cart" className="text-base font-medium transition-colors hover:text-primary">
+                  Cart
+                </Link>
                 <Link href="/auth/admin/ControlPanel" className="text-base font-medium transition-colors hover:text-primary">
                   Control Panel
                 </Link>
@@ -96,11 +99,12 @@ export function Header() {
               <span className="sr-only">Search</span>
             </Button>
           )}
-
-          <Button variant="ghost" size="icon">
+<a href="/cart">
+          <Button variant="ghost" size="icon" >
             <ShoppingCart className="h-5 w-5" />
             <span className="sr-only">Cart</span>
           </Button>
+</a>
 
           <Button variant="ghost" size="icon" className="relative" onClick={panelOpen}>
             <User className="h-5 w-5" />

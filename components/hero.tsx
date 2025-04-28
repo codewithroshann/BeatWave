@@ -17,7 +17,7 @@ export function Hero() {
           Find the  <span className="text-primary">Perfect Beat </span>for Your Next Track
         </h1>
         <p className="text-lg md:text-xl text-gray-200 max-w-lg mb-6">
-          Explore thousands of high-quality beats from top producers worldwide
+          Explore thousands of high-quality beats from here
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
           <a href="/explore">

@@ -18,7 +18,7 @@ const page = () => {
                                         <option value="Hardcore"/>
                                             <option value="R&B"/>
                                             </datalist>
-                                            <button type='submit' className='py-4 px-5 hover:bg-primary/70 duration-200 border-2 border-solid border-primary bg-primary rounded-md'><FaSearch className='h-5 w-5 text-white' /></button>
+                                            <button type='submit' className='py-4 px-5 hover:bg-primary/70 duration-100 border-2 border-solid border-primary bg-primary rounded-md'><FaSearch className='h-5 w-5 text-white' /></button>
 
                                         </form>
                                     </div>

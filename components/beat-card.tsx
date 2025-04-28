@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Play, Pause, ShoppingCart, Headphones } from "lucide-react"
-
+import { FaRupeeSign } from "react-icons/fa";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -107,7 +107,7 @@ export function BeatCard({ beat,isBeatPlaying }: BeatCardProps) {
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex flex-col sm:flex-row sm:items-center sm:gap-0  justify-between items-start gap-4 ">
-        <div className="font-bold">${beat.price}</div>
+        <div className="font-bold flex items-center "><FaRupeeSign className="text-sm inline"/>{beat.price}</div>
         <Button size="sm" className="gap-1">
           <ShoppingCart className="h-4 w-4 " />
           Add to Cart
