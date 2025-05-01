@@ -6,7 +6,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import FavIcon from "@/public/favicons/favicon-32x32.png"
 import IosFavIcon from "@/public/favicons/apple-touch-icon.png"
-import Head from "next/head"
+import StoreProvider from "@/redux/storeProvider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
@@ -29,17 +29,19 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
+    <StoreProvider>
     <html lang="en" suppressHydrationWarning>
-   
-      
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
+ 
         <Header />
           {children}
           <Footer />
+         
         </ThemeProvider>
       </body>
     </html>
+      </StoreProvider>
   )
 }
 

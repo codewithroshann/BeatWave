@@ -183,7 +183,7 @@ export function BeatList({ count }: { count: number }) {
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+    <div className="grid grid-cols-2 beat-container sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5 sm:gap-5">
       {BEATS.slice(0, count).map((beat) => (
         <BeatCard
           key={beat.id}

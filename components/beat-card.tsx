@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import React, { useRef } from "react"
-
-
+import { UseSelector,useDispatch } from "react-redux";
+import {addToCart} from "@/redux/slices/cartReducer"  
 
 interface Beat {
   id: string
@@ -36,7 +36,7 @@ export function BeatCard({ beat,isBeatPlaying }: BeatCardProps) {
   const [isPlaying, setIsPlaying] = useState<string | null>(null);
  const [w,setW]= useState<string | null>(null)
 
-
+const dispatch = useDispatch();
 
   const handlePlay = (id: string) => {  
    
@@ -66,7 +66,7 @@ export function BeatCard({ beat,isBeatPlaying }: BeatCardProps) {
 
   return (
     <Card
-      className="overflow-hidden transition-all duration-300 hover:shadow-lg"
+      className="overflow-hidden transition-all duration-300 hover:shadow-lg "
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -106,9 +106,9 @@ export function BeatCard({ beat,isBeatPlaying }: BeatCardProps) {
           </div> */}
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex flex-col sm:flex-row sm:items-center sm:gap-0  justify-between items-start gap-4 ">
+      <CardFooter className="p-4 pt-0 flex flex-col sm:flex-row sm:items-center sm:gap-2  justify-between items-start gap-4 ">
         <div className="font-bold flex items-center "><FaRupeeSign className="text-sm inline"/>{beat.price}</div>
-        <Button size="sm" className="gap-1">
+        <Button size="sm" className="gap-1" onClick={()=>dispatch(addToCart(beat))}> 
           <ShoppingCart className="h-4 w-4 " />
           Add to Cart
         </Button>
