@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer"
 import FavIcon from "@/public/favicons/favicon-32x32.png"
 import IosFavIcon from "@/public/favicons/apple-touch-icon.png"
 import StoreProvider from "@/redux/storeProvider"
+import Alert from "@/components/Alert/Alert"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
@@ -35,7 +36,9 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
  
         <Header />
+          <Alert />
           {children}
+
           <Footer />
          
         </ThemeProvider>

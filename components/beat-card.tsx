@@ -7,8 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import React, { useRef } from "react"
-import { UseSelector,useDispatch } from "react-redux";
-import {addToCart} from "@/redux/slices/cartReducer"  
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "@/redux/slices/cartReducer"
+import { setAlert, clearAlert } from "@/redux/slices/AlertReducer";
+
 
 interface Beat {
   id: string
@@ -19,7 +21,7 @@ interface Beat {
   price: number
   image: string
   audio: string
-  count:number
+  count: number
 }
 
 interface BeatCardProps {
@@ -29,17 +31,13 @@ interface BeatCardProps {
 
 }
 
-export function BeatCard({ beat,isBeatPlaying }: BeatCardProps) {
+export function BeatCard({ beat, isBeatPlaying }: BeatCardProps) {
 
   const [isHovered, setIsHovered] = useState(false)
   const audioRef = useRef<{ [key: string]: HTMLAudioElement | null }>({});
   const [isPlaying, setIsPlaying] = useState<string | null>(null);
- const [w,setW]= useState<string | null>(null)
-
-const dispatch = useDispatch();
-
-  const handlePlay = (id: string) => {  
-   
+  
+  const handlePlay = (id: string) => {
     // If a song is already playing and it's not the current one, pause it
     if (isPlaying && isPlaying !== null) {
       const previousAudio = audioRef.current[isPlaying];
@@ -48,9 +46,7 @@ const dispatch = useDispatch();
         previousAudio.currentTime = 0; // Reset the playback position
       }
     }
-
     const currentAudio = audioRef.current[id];
-
     if (currentAudio) {
       if (isPlaying === id) {
         // If the same song is clicked, toggle pause
@@ -63,6 +59,27 @@ const dispatch = useDispatch();
       }
     }
   };
+
+  const dispatch = useDispatch();
+  const beats = useSelector((state: any) => state.cart.cartItems);
+  const handleAddToCart = (beat: any) => {
+    if (beats.find((item: any) => item.id === beat.id)) {
+      dispatch(setAlert({ message: "Item Already Added In Cart!", type: "warning" }))
+      setTimeout(() => {
+        dispatch(clearAlert())
+      }, 3000);
+
+    } else {
+      dispatch(addToCart(beat))
+      dispatch(setAlert({ message: "Beat Added Successfully In Cart!", type: "success" }))
+      setTimeout(() => {
+        dispatch(clearAlert())
+      }, 3000);
+    }
+  };
+
+
+
 
   return (
     <Card
@@ -107,8 +124,8 @@ const dispatch = useDispatch();
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex flex-col sm:flex-row sm:items-center sm:gap-2  justify-between items-start gap-4 ">
-        <div className="font-bold flex items-center "><FaRupeeSign className="text-sm inline"/>{beat.price}</div>
-        <Button size="sm" className="gap-1" onClick={()=>dispatch(addToCart(beat))}> 
+        <div className="font-bold flex items-center "><FaRupeeSign className="text-sm inline" />{beat.price}</div>
+        <Button size="sm" className="gap-1" onClick={() => handleAddToCart(beat)}>
           <ShoppingCart className="h-4 w-4 " />
           Add to Cart
         </Button>

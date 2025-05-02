@@ -2,13 +2,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 //storing cart productsin local storage
 const saveToLocalStorage = (state: object) => {
-    localStorage.setItem('cartProducts', JSON.stringify(state));
-  };
-  //retrieving cart products from local storage
-  let storedProduct: CartItem[] = [];
-  if (typeof window !== 'undefined') {
-    storedProduct = JSON.parse(localStorage.getItem('cartProducts') || '[]');
-  }
+  localStorage.setItem('cartProducts', JSON.stringify(state));
+};
+//retrieving cart products from local storage
+let storedProduct: CartItem[] = [];
+if (typeof window !== 'undefined') {
+  storedProduct = JSON.parse(localStorage.getItem('cartProducts') || '[]');
+}
 // const storedProduct = JSON.parse(localStorage.getItem('cartProducts') || '[]');
 interface CartItem {
   id: string;
@@ -17,11 +17,12 @@ interface CartItem {
   image: string;
   producer: string;
   file: string;
+  count: number
   // You might want to add this property as well
 }
 
 const initialState = {
-  cartItems:storedProduct||[] as CartItem[], // Define the type of cartItems
+  cartItems: storedProduct || [] as CartItem[], // Define the type of cartItems
 };
 
 const cartSlice = createSlice({
@@ -29,22 +30,27 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      console.log(action.payload,"action.payload");
-      const { id, title, price, image, producer, file = "MP3" } = action.payload;
-      state.cartItems.push({ id, title, price, image, producer, file });
-      saveToLocalStorage(JSON.parse(JSON.stringify(state.cartItems)));     
+      const { id, title, price, image, producer, file = "MP3", count = 1 } = action.payload;
+      const beat = state.cartItems.find((item) => item.id === id);
+      if (beat) {
+        beat.count += 1
+      } else {
+        state.cartItems.push({ id, title, price, image, producer, file, count });
+      }
+      saveToLocalStorage(JSON.parse(JSON.stringify(state.cartItems)));
+
+
     },
     removeFromCart: (state, action) => {
-
+      const { id } = action.payload;
+      state.cartItems = state.cartItems.filter((item) => item.id !== id);
+      saveToLocalStorage(JSON.parse(JSON.stringify(state.cartItems)));
     },
-    updateQuantity: (state, action) => {
-
-    },
-    clearCart: (state) => {
+        clearCart: (state) => {
       state.cartItems = [];
     },
   },
 });
 
-export const { addToCart, removeFromCart, updateQuantity, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

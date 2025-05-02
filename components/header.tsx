@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Search, ShoppingCart, Menu, X, User } from "lucide-react"
-
+import { useSelector } from "react-redux"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -13,6 +13,8 @@ import Logo from "@/public/favicons/android-chrome-512x512.png"
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const[open,setOpen]=useState("hidden")
+  
+  const beats = useSelector((state: any) => state.cart.cartItems);
  
 
   const panelOpen=()=>{
@@ -100,7 +102,8 @@ export function Header() {
             </Button>
           )}
 <a href="/cart">
-          <Button variant="ghost" size="icon" >
+          <Button variant="ghost" size="icon" className="relative">
+            <span className="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white  top-[-3px] right-[-5px] rounded-full">{beats.length==0?"":beats.length}</span>
             <ShoppingCart className="h-5 w-5" />
             <span className="sr-only">Cart</span>
           </Button>
