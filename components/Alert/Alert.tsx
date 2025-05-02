@@ -16,7 +16,7 @@ const Alert = () => {
   return (
     <div className={`space-y-3 ${alert.visible ? "block" : "hidden"} fixed right-0 bottom-[60px] z-50`}>
       {/* <Alert variant="success">This is a information message.</Alert> */}
-      <div className={` ${alert.type == "warning" ? "block" : "hidden"} max-w-xs bg-white border border-gray-200 rounded-xl shadow-lg dark:bg-neutral-800 dark:border-neutral-700" role="alert" tabIndex={-1} aria-labelledby="hs-toast-normal-example-label`}>
+      <div className={` ${alert.type == "warning" ? "block" : "hidden"} max-w-xs bg-white border border-primary rounded-xl shadow-lg dark:bg-neutral-800 dark:border-neutral-700" role="alert" tabIndex={-1} aria-labelledby="hs-toast-normal-example-label`}>
         <div className="flex p-4">
           <div className="shrink-0">
             <svg className="shrink-0 size-4 text-blue-500 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -32,7 +32,7 @@ const Alert = () => {
       </div>
       {/* <Alert variant="success">This is a success message.</Alert> */}
 
-      <div className={`${alert.type == "success" ? "block" : "hidden"} max-w-xs bg-white border border-gray-200 rounded-xl shadow-lg dark:bg-neutral-800 dark:border-neutral-700" role="alert" tabIndex={-1} aria-labelledby="hs-toast-success-example-label`}>
+      <div className={`${alert.type == "success" ? "block" : "hidden"} max-w-xs bg-white border border-primary rounded-xl shadow-lg dark:bg-neutral-800 dark:border-neutral-700" role="alert" tabIndex={-1} aria-labelledby="hs-toast-success-example-label`}>
         <div className="flex p-4">
           <div className="shrink-0">
             <svg className="shrink-0 size-4 text-teal-500 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
