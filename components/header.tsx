@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Search, ShoppingCart, Menu, X, User } from "lucide-react"
 import { useSelector } from "react-redux"
@@ -13,10 +13,9 @@ import Logo from "@/public/favicons/android-chrome-512x512.png"
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const[open,setOpen]=useState("hidden")
+  const[BeatLength,setBeatLength]=useState(0)
   
   const beats = useSelector((state: any) => state.cart.cartItems);
- 
-
   const panelOpen=()=>{
     if(open=="hidden"){
     setOpen("block")
@@ -103,7 +102,8 @@ export function Header() {
           )}
 <a href="/cart">
           <Button variant="ghost" size="icon" className="relative">
-            <span className="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white  top-[-3px] right-[-5px] rounded-full">{beats.length==0?"":beats.length}</span>
+            <span className="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white  top-[2px] right-0 rounded-full">
+              {beats.length==0?"":beats.length}</span>
             <ShoppingCart className="h-5 w-5" />
             <span className="sr-only">Cart</span>
           </Button>

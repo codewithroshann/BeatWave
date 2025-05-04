@@ -9,6 +9,7 @@ import IosFavIcon from "@/public/favicons/apple-touch-icon.png"
 import StoreProvider from "@/redux/storeProvider"
 import Alert from "@/components/Alert/Alert"
 const inter = Inter({ subsets: ["latin"] })
+import BeatPlayer from "@/components/beatPlayer"
 
 export const metadata = {
   title: "BeatWave - Premium Beats Marketplace",
@@ -39,6 +40,7 @@ export default function RootLayout({
           <Alert />
           {children}
 
+<BeatPlayer />
           <Footer />
          
         </ThemeProvider>

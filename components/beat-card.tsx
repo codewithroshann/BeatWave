@@ -10,6 +10,7 @@ import React, { useRef } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "@/redux/slices/cartReducer"
 import { setAlert, clearAlert } from "@/redux/slices/AlertReducer";
+import {playing} from '@/redux/slices/musicPlayerReducer'
 
 
 interface Beat {
@@ -32,39 +33,43 @@ interface BeatCardProps {
 }
 
 export function BeatCard({ beat, isBeatPlaying }: BeatCardProps) {
+  
+    const dispatch = useDispatch();
+    const beats = useSelector((state: any) => state.cart.cartItems);
 
   const [isHovered, setIsHovered] = useState(false)
   const audioRef = useRef<{ [key: string]: HTMLAudioElement | null }>({});
   const [isPlaying, setIsPlaying] = useState<string | null>(null);
-  
-  const handlePlay = (id: string) => {
-    // If a song is already playing and it's not the current one, pause it
-    if (isPlaying && isPlaying !== null) {
-      const previousAudio = audioRef.current[isPlaying];
-      if (previousAudio) {
-        previousAudio.pause();
-        previousAudio.currentTime = 0; // Reset the playback position
-      }
-    }
-    const currentAudio = audioRef.current[id];
-    if (currentAudio) {
-      if (isPlaying === id) {
-        // If the same song is clicked, toggle pause
-        currentAudio.pause();
-        setIsPlaying(null); // Reset the state
-      } else {
-        // Otherwise, play the new song
-        currentAudio.play();
-        setIsPlaying(id); // Update the state to the new song's ID
-      }
-    }
-  };
 
-  const dispatch = useDispatch();
-  const beats = useSelector((state: any) => state.cart.cartItems);
+  const handlePlay = (beat: any) => {
+    dispatch(playing(beat)) 
+    // // If a song is already playing and it's not the current one, pause it
+    // if (isPlaying && isPlaying !== null) {
+    //   const previousAudio = audioRef.current[isPlaying];
+
+    //   if (previousAudio) {
+    //     previousAudio.pause();
+    //     previousAudio.currentTime = 0; // Reset the playback position
+    //   }
+    // }
+    // const currentAudio = audioRef.current[id];
+
+    // if (currentAudio) {
+    //   if (isPlaying === id) {
+    //     // If the same song is clicked, toggle pause
+    //     currentAudio.pause();
+    //     setIsPlaying(null); // Reset the state
+    //   } else {
+    //     // Otherwise, play the new song
+    //     currentAudio.play();
+    //     setIsPlaying(id); // Update the state to the new song's ID
+    //     console.log(isPlaying)
+    //   }
+    // }
+  };
   const handleAddToCart = (beat: any) => {
     if (beats.find((item: any) => item.id === beat.id)) {
-      dispatch(setAlert({ message: "Item Already Added In Cart!", type: "warning" }))
+      dispatch(setAlert({ message: "Beat Already Added In Cart!", type: "warning" }))
       setTimeout(() => {
         dispatch(clearAlert())
       }, 3000);
@@ -96,7 +101,7 @@ export function BeatCard({ beat, isBeatPlaying }: BeatCardProps) {
         <div className={`absolute inset-0 bg-black/50 flex items-center justify-center transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}>
           <Button
             className="rounded-full w-16 h-16"
-            onClick={() => handlePlay(beat.id)}
+            onClick={() => handlePlay(beat)}
             aria-label={isPlaying ? "Pause beat" : "Play beat"}
           >
             {isPlaying ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8 ml-1" />}

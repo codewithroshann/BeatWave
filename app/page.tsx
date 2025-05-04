@@ -2,7 +2,7 @@ import { Hero } from "@/components/hero"
 import { BeatList } from "@/components/beat-list"
 import { Beatcategory } from "@/components/beat-category"
 import Marquee from "@/components/marquee"
-import MusicPlayer from "@/components/musicPlayer"
+import MusicPlayer from "@/components/beatPlayer"
 import OfferComponent from '@/components/offer'
 import BeatBuyingInfo from '@/components/beatbuyinfo'
 import PaymentMethod from "@/components/paymentMethod"
