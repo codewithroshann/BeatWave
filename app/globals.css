@@ -117,7 +117,9 @@ position: relative;
   .beat-container {
   grid-template-columns:auto !important;
   }
-  
+  .music-cover{
+    display: none !important;
+  }
 }
 .alert{
   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);

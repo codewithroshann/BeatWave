@@ -236,11 +236,11 @@ export default function BeatPlayer() {
     }
   };
   return (
-    <div className={`flex flex-col w-full ${beat.playing==true ?"block":"hidden"} cursor-pointer bg-black text-white rounded-md overflow-hidden fixed bottom-0 z-50`}>
+    <div className={`flex flex-col w-full ${beat.playing==true ?"block":"hidden"}  duration-300 cursor-pointer bg-black text-white rounded-md overflow-hidden fixed bottom-0 z-50`}>
       {/* Progress bar at the top */}
       <div
         ref={progressBarRef}
-        className="h-1 w-full bg-gray-700 cursor-pointer relative"
+        className="h-1 w-full bg-gray-700 cursor-pointer relative h-2"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -256,7 +256,7 @@ export default function BeatPlayer() {
         {beat.audioSrc && <audio ref={audioRef} {...(beat.autoPlay ? {autoPlay:true} : {})}  src={beat.audioSrc} preload="metadata" />}
 
         <div className="flex items-center gap-3">
-          <div className="relative h-16 w-16 rounded-full overflow-hidden">
+          <div className="relative h-16 w-16 rounded-full overflow-hidden cursor-pointer music-cover">
             <Image src={beat.coverImage || "/placeholder.svg"} alt={`${beat.title} cover`} fill className={`object-cover animate-${isPlaying==true ?"spin":"none"}`}/>
           </div>
           <div className="flex flex-col">
@@ -265,7 +265,7 @@ export default function BeatPlayer() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 flex-1 justify-center">
+        <div className="flex items-center gap-4 flex-1 justify-center mx-3">
           <span className="text-xs text-gray-400">{formatTime(currentTime)}</span>
 
           <button
