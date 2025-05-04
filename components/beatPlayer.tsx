@@ -3,14 +3,17 @@
 import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
-import { Play, Pause, Heart, Bookmark, X } from "lucide-react"
+import { Play, Pause, Heart, Bookmark, X, ShoppingCart } from "lucide-react"
 import Image from "next/image"
 import { useSelector,useDispatch } from "react-redux"
 import {hideMusicPlayer} from '@/redux/slices/musicPlayerReducer'
+import { addToCart } from "@/redux/slices/cartReducer"
+import { clearAlert, setAlert } from "@/redux/slices/AlertReducer"
 
 interface BeatPlayer{
+  id:string
   title:string
-  artist:string
+  producer:string
   image:string
   audio:string
   playing:boolean
@@ -19,10 +22,11 @@ interface BeatPlayer{
 export default function BeatPlayer() {
   const dispatch = useDispatch()
   const beats:BeatPlayer = useSelector((state: any) => state.musicPlayer as BeatPlayer)
+  const cartBeats = useSelector((state: any) => state.cart.cartItems)
   
   const beat = {
     title: beats.title,
-    artist: beats.artist,
+    artist: beats.producer,
     coverImage: beats.image,
     audioSrc: beats.audio,
     playing:beats.playing,
@@ -35,6 +39,7 @@ export default function BeatPlayer() {
   const [duration, setDuration] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [audioError, setAudioError] = useState(false)
+  console.log(currentTime)
 
   const audioRef = useRef<HTMLAudioElement>(null)
   const progressBarRef = useRef<HTMLDivElement>(null)
@@ -87,11 +92,11 @@ export default function BeatPlayer() {
     return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
   }
 
+
   // Simulate playback when audio file is not available
   const simulatePlayback = () => {
     const startTime = performance.now() - currentTime * 1000
-
-    const updateSimulation = () => {
+     const updateSimulation = () => {
       const elapsedSeconds = (performance.now() - startTime) / 1000
       if (elapsedSeconds < duration) {
         setCurrentTime(elapsedSeconds)
@@ -104,13 +109,13 @@ export default function BeatPlayer() {
 
     animationRef.current = requestAnimationFrame(updateSimulation)
   }
-
   // Handle progress bar click/drag
   const handleProgressBarInteraction = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!progressBarRef.current) return
     const rect = progressBarRef.current.getBoundingClientRect()
     const clickPosition = (e.clientX - rect.left) / rect.width
     const newTime = clickPosition * duration
+
     setCurrentTime(newTime)
     if (!audioError && audioRef.current) {
       audioRef.current.currentTime = newTime
@@ -213,8 +218,24 @@ export default function BeatPlayer() {
     }
   }, [beat.audioSrc, beat.autoPlay])
 
+
+  const handleAddToCart = (beat: any) => {
+    if (cartBeats.find((item: any) => item.id === beat.id)) {
+      dispatch(setAlert({ message: "Beat Already Added In Cart!", type: "warning" }))
+      setTimeout(() => {
+        dispatch(clearAlert())
+      }, 3000);
+
+    } else {
+      dispatch(addToCart(beat))
+      dispatch(setAlert({ message: "Beat Added Successfully In Cart!", type: "success" }))
+      setTimeout(() => {
+        dispatch(clearAlert())
+      }, 3000);
+    }
+  };
   return (
-    <div className={`flex flex-col w-full ${beat.playing==true ?"block":"hidden"} bg-black text-white rounded-md overflow-hidden fixed bottom-0 z-50`}>
+    <div className={`flex flex-col w-full ${beat.playing==true ?"block":"hidden"} cursor-pointer bg-black text-white rounded-md overflow-hidden fixed bottom-0 z-50`}>
       {/* Progress bar at the top */}
       <div
         ref={progressBarRef}
@@ -224,7 +245,7 @@ export default function BeatPlayer() {
         onMouseUp={handleMouseUp}
       >
         <div
-          className="absolute top-0 left-0 h-full bg-primary transition-all duration-100"
+          className="absolute top-0 left-0 h-full cursor-pointer bg-primary transition-all duration-100"
           style={{ width: `${(currentTime / duration) * 100}%` }}
         />
       </div>
@@ -258,12 +279,7 @@ export default function BeatPlayer() {
 
         <div className="flex items-center gap-4">
 
-          <button
-
-            className="bg-white text-black px-4 py-1.5 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors"
-          >
-            Buy Now
-          </button>
+        <ShoppingCart className="h-5 w-5" onClick={()=>{handleAddToCart(beats)}}/>
 
           <button className="text-gray-400 hover:text-white transition-colors" onClick={()=>{dispatch(hideMusicPlayer())}}>
             <X className="h-5 w-5" />

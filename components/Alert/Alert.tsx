@@ -14,7 +14,7 @@ const Alert = () => {
   const alert = useSelector((state: any) => state.alert)
 
   return (
-    <div className={`space-y-3 ${alert.visible ? "block" : "hidden"} fixed right-0 bottom-[70px] z-50 alert `}>
+    <div className={`space-y-3 ${alert.visible ? "block" : "hidden"} fixed right-0 bottom-[90px] z-50 alert `}>
       {/* <Alert variant="success">This is a information message.</Alert> */}
       <div className={` ${alert.type == "warning" ? "block" : "hidden"} max-w-xs bg-white border border-primary rounded-xl alert shadow-lg dark:bg-neutral-800 dark:border-neutral-700" role="alert" tabIndex={-1} aria-labelledby="hs-toast-normal-example-label`}>
         <div className="flex p-4">

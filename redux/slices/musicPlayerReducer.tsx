@@ -1,20 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { title } from "process";
 interface MusicPlayerState {
-
+    id: string
     image: string | null,
     title: string | null,
-    artist: string | null,
+    producer: string | null,
     audio: string | null,
     playing: boolean
+    price:number
+    file:string
+    
 }
 
 const initialState = {
     image: null,
     title: null,
-    artist: null,
+    producer: null,
     audio: null,
-    playing: false
+    playing: false,
+    price:0,
+    file:"MP3"
 } as MusicPlayerState
 
 const musicPlayerSlice = createSlice({
@@ -22,18 +27,20 @@ const musicPlayerSlice = createSlice({
     initialState,
     reducers: {
         playing: (state, action) => {
-console.log(action.payload)
+            state.id = action.payload.id
             state.image = action.payload.image
             state.title = action.payload.title
-            state.artist = action.payload.producer
+            state.producer = action.payload.producer
             state.audio = action.payload.audio
             state.playing = true
+            state.price = action.payload.price
+
 
         },
         hideMusicPlayer: (state) => {
             state.image = null
             state.title = null
-            state.artist = null
+            state.producer = null
             state.audio = null
             state.playing = false
         }
@@ -41,6 +48,6 @@ console.log(action.payload)
     }
 
 })
-export const { playing,hideMusicPlayer } = musicPlayerSlice.actions;
+export const { playing, hideMusicPlayer } = musicPlayerSlice.actions;
 
 export default musicPlayerSlice.reducer;
