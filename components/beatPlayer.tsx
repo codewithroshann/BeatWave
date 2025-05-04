@@ -39,7 +39,7 @@ export default function BeatPlayer() {
   const [duration, setDuration] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [audioError, setAudioError] = useState(false)
-  console.log(currentTime)
+  
 
   const audioRef = useRef<HTMLAudioElement>(null)
   const progressBarRef = useRef<HTMLDivElement>(null)
@@ -47,15 +47,15 @@ export default function BeatPlayer() {
 
   // getting audio duration
     useEffect(()=>{
-      const audio = new Audio(beats.audio??'')
+        const audio = new Audio(beats.audio??'')
       const handleLoadedMetadata = () => {       
         setDuration(audio.duration);
+      
       };  
       audio.addEventListener('loadedmetadata', handleLoadedMetadata);      
     return () => {
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
-
     },);
     
   
@@ -96,6 +96,7 @@ export default function BeatPlayer() {
   // Simulate playback when audio file is not available
   const simulatePlayback = () => {
     const startTime = performance.now() - currentTime * 1000
+
      const updateSimulation = () => {
       const elapsedSeconds = (performance.now() - startTime) / 1000
       if (elapsedSeconds < duration) {
@@ -106,8 +107,8 @@ export default function BeatPlayer() {
         setIsPlaying(false)
       }
     }
-
     animationRef.current = requestAnimationFrame(updateSimulation)
+  
   }
   // Handle progress bar click/drag
   const handleProgressBarInteraction = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -158,9 +159,9 @@ export default function BeatPlayer() {
   // Set up audio event listeners
   useEffect(() => {
     const audio = audioRef.current
-    if (!audio) return
-
+         if (!audio) return
     const updateTime = () => setCurrentTime(audio.currentTime)
+   
     const updateDuration = () => {
       if (audio.duration && !isNaN(audio.duration)) {
         setDuration(audio.duration)
@@ -187,7 +188,7 @@ export default function BeatPlayer() {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [])
+  },)
 
     // Auto-play when component mounts if autoPlay is true
     useEffect(() => {
