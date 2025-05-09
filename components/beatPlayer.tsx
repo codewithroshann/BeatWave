@@ -236,7 +236,7 @@ export default function BeatPlayer() {
     }
   };
   return (
-    <div className={`flex flex-col w-full ${beat.playing==true ?"block":"hidden"}  duration-300 cursor-pointer bg-black text-white rounded-md overflow-hidden fixed bottom-0 z-50`}>
+    <div className={`flex flex-col w-full ${beat.playing==true ?"block":"hidden"}  duration-300 cursor-pointer bg-transparent-white backdrop-blur-lg text-white rounded-md overflow-hidden fixed bottom-0 z-50`}>
       {/* Progress bar at the top */}
       <div
         ref={progressBarRef}
@@ -252,7 +252,7 @@ export default function BeatPlayer() {
       </div>
 
       {/* Main player content */}
-      <div className="flex items-center justify-between w-full p-2">
+      <div className="flex items-center justify-between w-full px-2 py-1">
         {beat.audioSrc && <audio ref={audioRef} {...(beat.autoPlay ? {autoPlay:true} : {})}  src={beat.audioSrc} preload="metadata" />}
 
         <div className="flex items-center gap-3">

@@ -12,14 +12,14 @@ import Logo from "@/public/favicons/android-chrome-512x512.png"
 
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const[open,setOpen]=useState("hidden")
-  const[BeatLength,setBeatLength]=useState(0)
-  
+  const [open, setOpen] = useState("hidden")
+  const [BeatLength, setBeatLength] = useState(0)
+
   const beats = useSelector((state: any) => state.cart.cartItems);
-  const panelOpen=()=>{
-    if(open=="hidden"){
-    setOpen("block")
-    }else{
+  const panelOpen = () => {
+    if (open == "hidden") {
+      setOpen("block")
+    } else {
       setOpen("hidden")
     }
   }
@@ -56,7 +56,7 @@ export function Header() {
             </SheetContent>
           </Sheet>
           <Link href="/" className="flex items-center gap-2">
-            <img src={Logo.src} alt=""className="hidden md:inline-block h-9 w-9  rounded-full" />
+            <img src={Logo.src} alt="" className="hidden md:inline-block h-9 w-9  rounded-full" />
             <span className="font-bold text-xl">BeatWave</span>
           </Link>
         </div>
@@ -72,10 +72,10 @@ export function Header() {
             Trending
           </Link>
           <Link href="/auth/admin/controlpanel" className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-primary/80 ">
-                  Control Panel
-                </Link>
+            Control Panel
+          </Link>
         </nav>
-        
+
 
         <div className="flex items-center gap-2">
           {isSearchOpen ? (
@@ -100,23 +100,23 @@ export function Header() {
               <span className="sr-only">Search</span>
             </Button>
           )}
-<a href="/cart">
-          <Button variant="ghost" size="icon" className="relative">
-            <span className="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white  top-[2px] right-0 rounded-full">
-              {beats.length==0?"":beats.length}</span>
-            <ShoppingCart className="h-5 w-5" />
-            <span className="sr-only">Cart</span>
-          </Button>
-</a>
+          <Link href="/cart">
+            <Button variant="ghost" size="icon" className="relative">
+              <span className="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white  top-[2px] right-0 rounded-full">
+                {beats.length == 0 ? "" : beats.length}</span>
+              <ShoppingCart className="h-5 w-5" />
+              <span className="sr-only">Cart</span>
+            </Button>
+          </Link>
 
           <Button variant="ghost" size="icon" className="relative" onClick={panelOpen}>
             <User className="h-5 w-5" />
             <div className={`flex  flex-col absolute bottom-[-100px] bg-zinc-800 rounded-md w-[100px] py-2 px-3 right-[2px]  ${open}`}>
-            <a href="/auth/user/login" className="p-2 text-mb">Login</a>
-            <a href="/auth/user/signup" className="p-2 text-mb border-t-2 border-primary">SignUp</a>
+              <Link href="/auth/user/login" className="p-2 text-mb">Login</Link>
+              <Link href="/auth/user/signup" className="p-2 text-mb border-t-2 border-primary">SignUp</Link>
 
             </div>
-              
+
             <span className="sr-only">Account</span>
           </Button>
         </div>

@@ -41,21 +41,16 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-medium">Quick Links</h3>
             <nav className="flex flex-col mt-4 space-y-2 text-sm">
-              <Link href="#" className="hover:text-primary">
+              <Link href="/" className="hover:text-primary">
                 Home
               </Link>
-              <Link href="#" className="hover:text-primary">
+              <Link href="/explore" className="hover:text-primary">
                 Explore
               </Link>
-              <Link href="#" className="hover:text-primary">
+              <Link href="/trending" className="hover:text-primary">
                 Trending
               </Link>
-              <Link href="#" className="hover:text-primary">
-                Sell Beats
-              </Link>
-              <Link href="#" className="hover:text-primary">
-                Pricing
-              </Link>
+                   
             </nav>
           </div>
 
