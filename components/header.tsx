@@ -82,19 +82,19 @@ export function Header() {
             </SheetTrigger>
             <SheetContent side="left" className="w-[240px] sm:w-[300px]">
               <nav className="flex flex-col gap-4 mt-6">
-                <Link href="/" className="text-base font-medium transition-colors hover:text-primary">
+                <Link href="/" className="text-base font-medium transition-colors px-2 hover:bg-zinc-500/50">
                   Home
                 </Link>
-                <Link href="/explore" className="text-base font-medium transition-colors hover:text-primary">
+                <Link href="/explore" className="text-base font-medium transition-colors px-2 hover:bg-zinc-500/50">
                   Explore
                 </Link>
-                <Link href="/trending" className="text-base font-medium transition-colors hover:text-primary">
+                <Link href="/trending" className="text-base font-medium transition-colors px-2  hover:bg-zinc-500/50">
                   Trending
                 </Link>
-                <Link href="/cart" className="text-base font-medium transition-colors hover:text-primary">
+                <Link href="/cart" className="text-base font-medium transition-colors px-2 hover:bg-zinc-500/50">
                   Cart
                 </Link>
-                <Link href="/auth/admin/ControlPanel" className="text-base font-medium transition-colors hover:text-primary">
+                <Link href="/auth/admin/ControlPanel" className="text-base font-medium transition-colors px-2 hover:bg-zinc-500/50">
                   Control Panel
                 </Link>
               </nav>

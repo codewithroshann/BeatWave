@@ -66,10 +66,10 @@ export function Footer() {
               <Link href="licenses-info" className="hover:text-primary">
                 License Information
               </Link>
-              <Link href="#" className="hover:text-primary">
+              <Link href="terms-and-conditions" className="hover:text-primary">
                 Terms of Service
               </Link>
-              <Link href="#" className="hover:text-primary">
+              <Link href="privacy-and-policy" className="hover:text-primary">
                 Privacy Policy
               </Link>
             </nav>
