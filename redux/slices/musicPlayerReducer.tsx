@@ -34,8 +34,6 @@ const musicPlayerSlice = createSlice({
             state.audio = action.payload.audio
             state.playing = true
             state.price = action.payload.price
-
-
         },
         hideMusicPlayer: (state) => {
             state.image = null

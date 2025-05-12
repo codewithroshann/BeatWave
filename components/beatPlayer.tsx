@@ -236,7 +236,7 @@ export default function BeatPlayer() {
     }
   };
   return (
-    <div className={`flex flex-col w-full ${beat.playing==true ?"block":"hidden"}  duration-300 cursor-pointer bg-transparent-white backdrop-blur-lg text-white rounded-md overflow-hidden fixed bottom-0 z-50`}>
+    <div className={`flex flex-col w-full ${beat.playing==true ?"block":"hidden"} supports-[backdrop-filter]:bg-background/60 duration-300 cursor-pointer bg-background/95 backdrop-blur-md text-white rounded-md overflow-hidden fixed bottom-0 z-50`}>
       {/* Progress bar at the top */}
       <div
         ref={progressBarRef}

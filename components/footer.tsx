@@ -57,10 +57,13 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-medium">Information</h3>
             <nav className="flex flex-col mt-4 space-y-2 text-sm">
-              <Link href="#" className="hover:text-primary">
+              <Link href="/about" className="hover:text-primary">
                 About Us
               </Link>
-              <Link href="#" className="hover:text-primary">
+              <Link href="/contact-us" className="hover:text-primary">
+                Contact Us
+              </Link>
+              <Link href="licenses-info" className="hover:text-primary">
                 License Information
               </Link>
               <Link href="#" className="hover:text-primary">
@@ -68,9 +71,6 @@ export function Footer() {
               </Link>
               <Link href="#" className="hover:text-primary">
                 Privacy Policy
-              </Link>
-              <Link href="#" className="hover:text-primary">
-                Contact Us
               </Link>
             </nav>
           </div>

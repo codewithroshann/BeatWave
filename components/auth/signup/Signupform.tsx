@@ -60,6 +60,7 @@ const Signupform = () => {
                 }
             } else {
                 const data = await response.json();
+                setError(data.message);
 
             }
         } catch (error) {

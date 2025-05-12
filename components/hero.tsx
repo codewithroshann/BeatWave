@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
-import { url } from "inspector"
+import Link from "next/link"
+import HeroImage from "@/public/hero-image.jpg"
 
 export function Hero() {
   return (
@@ -11,7 +12,7 @@ export function Hero() {
         }}
       ></div>
       <div
-        className="h-[500px] w-full bg-cover bg-center" style={{ backgroundImage:"url('./hero-image.jpg')"}}></div>
+        className="h-[500px] w-full bg-cover bg-center" style={{ backgroundImage:`url(${HeroImage.src})`}}></div>
       <div className="absolute inset-0 flex flex-col justify-center items-start container px-4 z-20">
         <h1 className="text-4xl md:text-6xl font-bold text-white max-w-xl mb-4">
           Find the  <span className="text-primary">Perfect Beat </span>for Your Next Track
@@ -20,11 +21,11 @@ export function Hero() {
           Explore thousands of high-quality beats from here
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <a href="/explore">
+          <Link href="/explore">
           <Button size="lg"  className="bg-primary hover:bg-primary/90">
             Browse Beats
           </Button>
-          </a>
+          </Link>
           {/* <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
             Sell Your Beats
           </Button> */}
