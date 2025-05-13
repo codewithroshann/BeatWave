@@ -9,7 +9,7 @@ export const store = configureStore({
     cart: cartReducer,
     alert:alertReducer,
     musicPlayer:musicPlayerReducer,
-    Auth: AuthReducer
+    auth: AuthReducer
   },
 })
 

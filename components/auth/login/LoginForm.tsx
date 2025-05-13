@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { setAlert, clearAlert } from '@/redux/slices/AlertReducer';
-import { useDispatch, UseDispatch } from 'react-redux';
-import { setLogin } from '@/redux/slices/AuthReducer';
+import { useDispatch } from 'react-redux';
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -30,9 +29,8 @@ const LoginForm = () => {
             setLoading(true)
             if (response.ok) {
                 const data = await response.json();
-                dispatch(setAlert({ message: "Login Successfully!", type: "success" }));
-                dispatch(setLogin(true));
-                if (data.redirectUrl) {
+                dispatch(setAlert({ message: data.message, type: data.type }));
+              if (data.redirectUrl) {
                     setTimeout(() => {
                         router.push(data.redirectUrl)
                     }, 2500);
@@ -50,8 +48,7 @@ const LoginForm = () => {
             setLoading(false)
             dispatch(clearAlert())
             setMessage("")
-            window.location.reload();
-        }, 3000);
+                   }, 3000);
         
     }
 
