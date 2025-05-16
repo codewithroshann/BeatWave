@@ -76,7 +76,7 @@ const cart = () => {
 
                 </div>
 
-                <div className='w-full md:max-w-[450px]  border rounded-md p-3 flex-1 h-fit'>
+                <div className='w-full md:max-w-[450px] sticky top-20  border rounded-md p-3 flex-1 h-fit'>
                     <h3 className='text-3xl font-semibold mb-5'> Order Summary</h3>
                     <div className="grid grid-cols-2 ">
                         <b className=''>Sub-Total :</b><span className='flex items-center'> <FaRupeeSign className='text-xs' />

@@ -49,8 +49,7 @@
   border-radius: 10px;
 }
 body{
-  scroll-behavior: smooth;
-min-height: 100dvh;
+  min-height: 100dvh;
 position: relative;
 }
 

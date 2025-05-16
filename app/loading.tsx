@@ -1,8 +1,8 @@
 import React from 'react'
 
-const loading = () => {
+const loading = ({ classNames }: { className?: any,classNames?:string }) => {
   return (
-    <div className="text-center h-[500px] flex items-center justify-center">
+    <div className={`text-center min-h-[500px] h-full ${classNames} flex items-center justify-center`}>
 
     <div role=" status">
     <svg aria-hidden="true" className="inline w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-primary" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

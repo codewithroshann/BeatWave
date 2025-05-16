@@ -213,7 +213,7 @@ export function Header() {
             <User className="h-5 w-5" />
             {islogedIn == false ? (
               <div
-                className={`flex  flex-col absolute bottom-[-100px] bg-zinc-800 rounded-md w-[150px] py-2 px-3 right-[10px]  ${open}`}
+                className={`flex  flex-col absolute bottom-[-100px] bg-zinc-800 rounded-md w-[120px] py-2 px-3 right-[10px]  ${open}`}
               >
                 <Link
                   href="/auth/user/login"
@@ -233,7 +233,7 @@ export function Header() {
               </div>
             ) : (
               <div
-                className={`flex  flex-col absolute bottom-[-100px] bg-zinc-800 rounded-md w-[150px] py-2 px-3 right-[10px]  ${open}`}
+                className={`flex  flex-col absolute bottom-[-100px] bg-zinc-800 rounded-md w-[120px] py-2 px-3 right-[10px]  ${open}`}
               >
                 <Link
                   href="/account"
@@ -245,7 +245,7 @@ export function Header() {
                 </Link>
                 <Button
                   onClick={logOut}
-                  className="p-2 text-mb duration-100 rounded-md hover:bg-zinc-700/50  flex gap-2 items-center"
+                  className="p-2 text-mb duration-100 rounded-md text-start hover:bg-zinc-700/50 bg-zinc-800 flex gap-2 justify-start items-center"
                 >
                   <IoIosLogOut className="text-xs" />
                   Logout

@@ -16,8 +16,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
 
 // This would normally be fetched from an API
 const beat = {
@@ -61,7 +59,7 @@ const beat = {
 export default function BeatPage() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Header />
+ 
       <main className="flex-1 container px-4 py-6 mx-auto">
         <Link href="/" className="inline-flex items-center text-sm font-medium mb-6 hover:text-primary">
           <ChevronLeft className="mr-1 h-4 w-4" />
@@ -210,7 +208,7 @@ export default function BeatPage() {
           </div>
         </div>
       </main>
-      <Footer />
+    
     </div>
   )
 }

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../ui/button";
+
 const Account = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -29,7 +30,7 @@ const Account = () => {
             >
               UserId
             </label>
-            <div className="flex">
+            <div className="flex h-[50px]">
               <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-zinc-800 dark:text-white dark:border-gray-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +65,7 @@ const Account = () => {
             >
               Name
             </label>
-            <div className="flex">
+            <div className="flex h-[50px]">
               <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-zinc-800 dark:text-white  dark:border-gray-600">
                 <svg
                   className="w-4 h-4 dark:text-white text-gray-400"
@@ -94,7 +95,7 @@ const Account = () => {
           >
             Email Account
           </label>
-          <div className="flex">
+          <div className="flex h-[50px]">
             <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-zinc-800 dark:text-white  dark:border-gray-600">
               <svg
                 className="w-4 h-4 dark:text-white text-gray-400"
@@ -124,7 +125,7 @@ const Account = () => {
           >
             Phone Number
           </label>
-          <div className="flex">
+          <div className="flex h-[50px]">
             <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-zinc-800 dark:text-white  dark:border-gray-600">
               <svg
                 className="w-4 h-4 dark:text-white text-gray-400"
@@ -155,7 +156,7 @@ const Account = () => {
           >
             Gender
           </label>
-          <div className="flex">
+          <div className="flex h-[50px]">
             <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-zinc-800 dark:text-white  dark:border-gray-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
