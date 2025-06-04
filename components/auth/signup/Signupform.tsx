@@ -67,9 +67,10 @@ const Signupform = () => {
             setError('Something went wrong. Please try again.'); // Handle network errors
         }
         setTimeout(() => {
-            setIsLoading(false)
-            dispatch(clearAlert())
-        }, 3000)
+            setIsLoading(false);
+            dispatch(clearAlert());
+            setError("");
+          }, 3000);
     };
   return (
    <>

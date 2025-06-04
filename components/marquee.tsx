@@ -31,7 +31,7 @@ export default function Marquee({
   return (
     <div className={cn("relative show-case overflow-hidden w-full cursor-pointer", className)} {...props}>
       <div
-        className={cn("flex whitespace-nowrap", pauseOnHover && "hover:[animation-play-state:paused]")}
+        className={cn("flex whitespace-nowrap", pauseOnHover==true? "hover:[animation-play-state:paused]" :"")}
         style={{
           animation: `marquee ${contentWidth / speed}s linear infinite ${reverse ? "reverse" : "normal"}`,
         }}

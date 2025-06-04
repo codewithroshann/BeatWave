@@ -23,81 +23,62 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 
-export function BeatUploadForm() {
+export function EditBeat({ beat, model }: any) {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isUploading, setIsUploading] = useState(false);
-  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(
+    beat.thumbnail
+  );
 
   // Form States Handlers
-  const [title, setTitle] = useState("");
-  const [producer, setProducer] = useState("");
-  const [genre, setGenre] = useState("");
-  const [price, setPrice] = useState("");
-  const [bpm, setBpm] = useState(120);
-  const [description, setDescription] = useState("");
-  const [beatFile, setBeatFile] = useState<File | null>(null);
-  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
-
-  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setThumbnailFile(file);
-
-      // Create preview URL
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setThumbnailPreview(event.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleBeatFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setBeatFile(e.target.files[0]);
-    }
-  };
-  const removeThumbnail = () => {
-    setThumbnailFile(null);
-    setThumbnailPreview(null);
-  };
-
-  const removeBeatFile = () => {
-    setBeatFile(null);
-  };
-
-  const formData = new FormData();
-  formData.append("title", title);
-  formData.append("producer", producer);
-  formData.append("genre", genre);
-  formData.append("bpm", String(bpm));
-  formData.append("price", String(price));
-  formData.append("description", description);
-  if (beatFile) formData.append("beatFile", beatFile);
-  if (thumbnailFile) formData.append("thumbnailFile", thumbnailFile);
+  const [title, setTitle] = useState(beat.title);
+  const [producer, setProducer] = useState(beat.producer);
+  const [genre, setGenre] = useState(beat.genre);
+  const [price, setPrice] = useState(beat.price);
+  const [bpm, setBpm] = useState(beat.bpm);
+  const [description, setDescription] = useState(beat.description);
+  const [beatFile, setBeatFile] = useState<string | null>(beat.audio);
+  const [thumbnailFile, setThumbnailFile] = useState<string | null>(
+    beat.thumbnail
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log(title, producer, genre, bpm, price, description);
     e.preventDefault();
     setIsUploading(true);
     try {
-      const response = await fetch("http://localhost:8000/beat-uploads", {
-        method: "POST",
-        body: formData,
-      });
-     if(response.ok){
-      const data = await response.json();
-      setIsUploading(false);
-      dispatch(setAlert({ message: data.message, type: data.type }));
-      if (data.redirectUrl) {
-        setTimeout(() => {
+      const response = await fetch(
+        `http://localhost:8000/admin/update/${beat._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            producer,
+            genre,
+            bpm,
+            price,
+            description,
+          }),
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setIsUploading(false);
+        dispatch(setAlert({ message: data.message, type: data.type }));
+        if (data.redirectUrl) {
           router.push(data.redirectUrl);
-          dispatch(clearAlert());
-        }, 2500);
+          setTimeout(() => {
+            window.location.reload();
+            dispatch(clearAlert());
+          }, 2500);
+        }
+      } else {
+        dispatch(setAlert({ message: "Something went wrong!", type: "error" }));
       }
-     }else{
-      dispatch(setAlert({ message: "Something went wrong!", type: "error" }));
-     }
     } catch (error) {
       console.log(error);
     }
@@ -121,6 +102,7 @@ export function BeatUploadForm() {
                     placeholder="Enter beat title"
                     required
                     onChange={(e) => setTitle(e.target.value)}
+                    value={title}
                   />
                 </div>
 
@@ -132,6 +114,7 @@ export function BeatUploadForm() {
                     placeholder="Producer name"
                     required
                     onChange={(e) => setProducer(e.target.value)}
+                    value={producer}
                   />
                 </div>
 
@@ -143,11 +126,11 @@ export function BeatUploadForm() {
                     required
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select genre" />
+                      <SelectValue placeholder={genre} />
                     </SelectTrigger>
                     <SelectContent className="duration-100">
                       <SelectItem value="trap">Trap</SelectItem>
-                      <SelectItem value="hip hop">Hip Hop</SelectItem>
+                      <SelectItem value="hiphop">Hip Hop</SelectItem>
                       <SelectItem value="rnb">R&B</SelectItem>
                       <SelectItem value="drill">Drill</SelectItem>
                       <SelectItem value="lofi">Lo-Fi</SelectItem>
@@ -168,6 +151,7 @@ export function BeatUploadForm() {
                     step="0.01"
                     placeholder="29.99"
                     onChange={(e) => setPrice(e.target.value)}
+                    value={price}
                     required
                   />
                 </div>
@@ -199,9 +183,9 @@ export function BeatUploadForm() {
                     placeholder="Describe your beat..."
                     className="h-24"
                     onChange={(e) => setDescription(e.target.value)}
+                    value={description}
                   />
                 </div>
-
                 <div>
                   <Label>Thumbnail</Label>
                   <div className="mt-2">
@@ -225,11 +209,10 @@ export function BeatUploadForm() {
                           type="file"
                           accept="image/*"
                           className="hidden"
-                          onChange={handleThumbnailChange}
                         />
                       </div>
                     ) : (
-                      <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+                      <div className="relative w-full aspect-video rounded-lg overflow-hidden cursor-not-allowed">
                         <Image
                           src={thumbnailPreview || "/placeholder.svg"}
                           alt="Thumbnail preview"
@@ -241,7 +224,6 @@ export function BeatUploadForm() {
                           variant="destructive"
                           size="icon"
                           className="absolute top-2 bg-primary right-2 h-8 w-8 rounded-full hover:bg-primary"
-                          onClick={removeThumbnail}
                         >
                           <X className="h-4 w-4" />
                         </Button>
@@ -272,16 +254,15 @@ export function BeatUploadForm() {
                           name="beatFile"
                           type="file"
                           accept=".mp3,.wav"
-                          className="hidden"
-                          onChange={handleBeatFileChange}
+                          className="hidden cursor-not-allowed"
                         />
                       </div>
                     ) : (
-                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex items-center justify-between p-3 border rounded-lg cursor-not-allowed">
                         <div className="flex items-center gap-2">
                           <Music className="h-5 w-5 text-muted-foreground" />
                           <span className="text-sm font-medium truncate max-w-[200px]">
-                            {beatFile.name}
+                            {beatFile}
                           </span>
                         </div>
                         <Button
@@ -289,7 +270,6 @@ export function BeatUploadForm() {
                           variant="ghost"
                           size="icon"
                           className="h-8 w-8 "
-                          onClick={removeBeatFile}
                         >
                           <X className="h-4 w-4" />
                         </Button>
@@ -298,10 +278,14 @@ export function BeatUploadForm() {
                   </div>
                 </div>
               </div>
+
+              <p className="text-muted-foreground text-sm">
+                You cannot change the beat file once uploaded
+              </p>
             </div>
 
             <div className="flex justify-end gap-4 pt-4">
-              <Button type="button" variant="outline">
+              <Button type="button" variant="outline" onClick={model}>
                 Cancel
               </Button>
               <Button type="submit" disabled={isUploading || !beatFile}>
@@ -311,13 +295,6 @@ export function BeatUploadForm() {
           </CardContent>
         </Card>
       </form>
-      {isUploading == true ? (
-        <Loading
-          classNames={"absolute bg-transparent backdrop-blur-[5px] w-full"}
-        />
-      ) : (
-        ""
-      )}
     </>
   );
 }

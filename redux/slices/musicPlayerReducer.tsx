@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Pause } from "lucide-react";
 import { title } from "process";
 interface MusicPlayerState {
     id: string
@@ -13,6 +14,7 @@ interface MusicPlayerState {
 }
 
 const initialState = {
+    id:"",
     image: null,
     title: null,
     producer: null,
@@ -27,8 +29,8 @@ const musicPlayerSlice = createSlice({
     initialState,
     reducers: {
         playing: (state, action) => {
-            state.id = action.payload.id
-            state.image = action.payload.image
+            state.id = action.payload._id
+            state.image = action.payload.thumbnail
             state.title = action.payload.title
             state.producer = action.payload.producer
             state.audio = action.payload.audio
@@ -41,11 +43,14 @@ const musicPlayerSlice = createSlice({
             state.producer = null
             state.audio = null
             state.playing = false
+        },
+        PauseMusicPlayer:(state,action)=>{
+                      state.audio = null
         }
 
     }
 
 })
-export const { playing, hideMusicPlayer } = musicPlayerSlice.actions;
+export const { playing, hideMusicPlayer,PauseMusicPlayer } = musicPlayerSlice.actions;
 
 export default musicPlayerSlice.reducer;

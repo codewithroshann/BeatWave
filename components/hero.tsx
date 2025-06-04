@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import HeroImage from "@/public/hero-image.jpg"
+import Spline from "./spline"
 
 export function Hero() {
   return (
@@ -11,7 +12,7 @@ export function Hero() {
           backgroundImage: "linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%)",
         }}
       ></div>
-      <div
+<div
         className="h-[500px] w-full bg-cover bg-center" style={{ backgroundImage:`url(${HeroImage.src})`}}></div>
       <div className="absolute inset-0 flex flex-col justify-center items-start container px-4 z-20">
         <h1 className="text-4xl md:text-6xl font-bold text-white max-w-xl mb-4">

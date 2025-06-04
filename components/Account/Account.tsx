@@ -1,10 +1,26 @@
 "use client";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../ui/button";
+import { setAlert, clearAlert } from "@/redux/slices/AlertReducer";
 
 const Account = () => {
+  const dispatch = useDispatch();
+  const userDetails = useSelector((state: any) => state.auth.user);
+  let name: string | null = null;
+  let phone: number | null = null;
+  let gender: string | null = null;
+
+  if (userDetails) {
+    name = userDetails.fullName;
+    gender = userDetails.gender;
+    phone = userDetails.phone;
+  }
+
   const [isOpen, setIsOpen] = useState(false);
+  const [nameState, setName] = useState(name);
+  const [phoneState, setPhone] = useState(phone);
+  const [genderState, setGender] = useState(gender);
 
   const openModal = () => {
     setIsOpen(true);
@@ -12,13 +28,52 @@ const Account = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
-  const userDetails = useSelector((state: any) => state.auth.user);
   if (!userDetails)
     return (
       <h1 className="text-4xl text-center text-white/30 mt-16 font-bold ">
         No User Found
       </h1>
     );
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:8000/update-profile", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: nameState,
+          phone: phoneState,
+          gender: genderState,
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.message) {
+          dispatch(setAlert({ message: data.message, type: data.type }));
+          setName(data.user.fullName);
+          setPhone(data.user.phone);
+          setGender(data.user.gender);
+        }
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+      if (!response.ok) {
+        const errorMsg = await response.json();
+        dispatch(setAlert({ message: errorMsg.message, type: errorMsg.type }));
+      }
+
+      setTimeout(() => {
+        dispatch(clearAlert());
+      }, 2500);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="max-w-xl mx-auto mt-8 ">
@@ -229,7 +284,7 @@ const Account = () => {
                   </button>
                 </div>
                 {/* <!-- Modal body --> */}
-                <form className="p-4 md:p-5">
+                <form className="p-4 md:p-5" onSubmit={handleSubmit}>
                   <div className="grid gap-4 mb-4 grid-cols-2">
                     <div className="col-span-2">
                       <label
@@ -261,10 +316,13 @@ const Account = () => {
                         type="text"
                         name="name"
                         id="name"
-                        defaultValue={userDetails.fullName}
+                        defaultValue={nameState ?? ""}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-zinc-800 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Name"
                         required
+                        onChange={(e) => {
+                          setName(e.target.value);
+                        }}
                       />
                     </div>
                     <div className="col-span-2">
@@ -295,11 +353,14 @@ const Account = () => {
                         type="tel"
                         name="number"
                         id="number"
-                        defaultValue={userDetails.phone}
+                        defaultValue={phoneState || ""}
                         className="bg-gray-50 border border-gray-300 dark:text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-zinc-800 dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                         placeholder="123-456-7890"
                         required
+                        minLength={10}
+                        onChange={(e) => {
+                          setPhone(parseInt(e.target.value));
+                        }}
                       />
                     </div>
                     <div className="col-span-2 sm:col-span-1">
@@ -312,7 +373,11 @@ const Account = () => {
                       <select
                         id="category"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-zinc-800 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        onChange={(e) => setGender(e.target.value)}
                       >
+                        <option defaultValue={genderState || ""}>
+                          {gender}
+                        </option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
@@ -321,7 +386,7 @@ const Account = () => {
                   </div>
                   <div className="grid sm:grid-cols-2 sm:gap-6">
                     <Button
-                      type="submit"
+                      onClick={closeModal}
                       className="text-black inline-flex items-center bg-white hover:bg-white/80 duration-100 mt-4"
                     >
                       Cancel

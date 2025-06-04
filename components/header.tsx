@@ -14,20 +14,16 @@ import { FiUserPlus } from "react-icons/fi";
 import { LuUserPen } from "react-icons/lu";
 import { IoIosLogOut } from "react-icons/io";
 import { setAlert, clearAlert } from "@/redux/slices/AlertReducer";
-import { authLogedIn, authLogedOut } from "@/redux/slices/AuthReducer";
+import { userData, userLogedOut } from "@/redux/slices/AuthReducer";
 
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [open, setOpen] = useState("hidden");
   const [islogedIn, setIsLogedIn] = useState(false);
-  const [beatLength, setBeatLength] = useState<number | null>(null);
-
+  const [cart, setCart] = useState([0]);
   const dispatch = useDispatch();
   const router = useRouter();
-  const beats = useSelector((state: any) => state.cart.cartItems);
-  useEffect(() => {
-    setBeatLength(beats.length);
-  }, [beats]);
+  const data = useSelector((state: any) => state.auth.user);
 
   const panelOpen = () => {
     if (open == "hidden") {
@@ -44,15 +40,27 @@ export function Header() {
       });
       if (response.ok) {
         const data = await response.json();
-        setIsLogedIn(data.isLogedIn);
-        dispatch(authLogedIn(data.user));
+
+        if (data.isLogedIn == true) {
+          dispatch(userData(data.user));
+          setIsLogedIn(data.isLogedIn);
+          setCart(data.cart);
+        } else {
+          setIsLogedIn(data.isLogedIn);
+          console.log("No User Found!");
+        }
       }
     };
-    checkAuth();
-  });
+
+    const interval = setInterval(() => {
+      checkAuth();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const logOut = async () => {
-    const response = await fetch("http://localhost:8000/logout", {
+    const response = await fetch("http://localhost:8000/user/logout", {
       method: "POST",
       credentials: "include",
     });
@@ -60,7 +68,7 @@ export function Header() {
       const data = await response.json();
       setIsLogedIn(data.isLogedIn);
       dispatch(setAlert({ message: "Logout Successfully!", type: "success" }));
-      dispatch(authLogedOut({}));
+      dispatch(userLogedOut());
       router.push("/");
     } else {
       const errorMsg = await response.json();
@@ -108,12 +116,22 @@ export function Header() {
                 >
                   Cart
                 </Link>
-                <Link
-                  href="/auth/admin/ControlPanel"
-                  className="text-base font-medium transition-colors px-2 hover:bg-zinc-500/50"
-                >
-                  Control Panel
-                </Link>
+                {data?.role === "admin" ? (
+            <Link
+              href="/auth/admin/controlpanel"
+              className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
+            >
+              Control Panel
+            </Link>
+          ) : (
+            ""
+          )}
+               <Link
+              href="/account"
+              className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
+            >
+             Account
+            </Link>
               </nav>
             </SheetContent>
           </Sheet>
@@ -146,16 +164,20 @@ export function Header() {
           >
             Trending
           </Link>
-          <Link
-            href="/auth/admin/controlpanel"
-            className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
-          >
-            Control Panel
-          </Link>
+          {data?.role === "admin" ? (
+            <Link
+              href="/auth/admin/controlpanel"
+              className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
+            >
+              Control Panel
+            </Link>
+          ) : (
+            ""
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
-          {isSearchOpen ? (
+          {/* {isSearchOpen ? (
             <div className="flex items-center">
               <Input
                 type="search"
@@ -189,21 +211,25 @@ export function Header() {
               <Search className="h-5 w-5" />
               <span className="sr-only">Search</span>
             </Button>
+          )} */}
+          {islogedIn == true ? (
+            <Link href="/cart">
+              <Button variant="ghost" size="icon" className="relative">
+                <span
+                  className={`absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white
+                   ${
+                     cart.length == 0 ? "" : "bg-red-500"
+                   }  top-[1px] right-0 rounded-full`}
+                >
+                  {cart.length == 0 ? "" : cart.length}
+                </span>
+                <ShoppingCart className="h-5 w-5" />
+                <span className="sr-only">Cart</span>
+              </Button>
+            </Link>
+          ) : (
+            ""
           )}
-          <Link href="/cart">
-            <Button variant="ghost" size="icon" className="relative">
-              <span
-                className={`absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white ${
-                  beatLength == 0 ? "" : "bg-red-600"
-                }  top-[1px] right-0 rounded-full`}
-              >
-                {beatLength == 0 ? "" : beatLength}
-              </span>
-              <ShoppingCart className="h-5 w-5" />
-              <span className="sr-only">Cart</span>
-            </Button>
-          </Link>
-
           <Button
             variant="ghost"
             size="icon"
