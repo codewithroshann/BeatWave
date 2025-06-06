@@ -12,7 +12,7 @@ interface CartProps {
 const cart = ({ beats }: CartProps) => {
   const cartBeats = beats?.beats;
 
-  if (cartBeats.length === 0||!cartBeats) {
+  if (!beats || !cartBeats || cartBeats.length === 0) {
     return (
       <div className="text-center text-white/20 duration-100 flex items-center justify-center h-[500px] text-6xl mt-8 font-bold">
         Empty Cart <FaShoppingCart />
