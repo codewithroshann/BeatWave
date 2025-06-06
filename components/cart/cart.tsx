@@ -5,9 +5,12 @@ import { FaRupeeSign } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button } from "../ui/button";
 import DeleteFromCart from "../ClientButtons/DeleteFromCart";
+interface CartProps {
+  beats: { beats: any[] };
+}
 
-const cart = ({ beats }: any) => {
-  const cartBeats = beats.beats;
+const cart = ({ beats }: CartProps) => {
+  const cartBeats = beats?.beats;
 
   if (cartBeats.length === 0||!cartBeats) {
     return (

@@ -20,8 +20,8 @@ async function getCart() {
       return await response.json();
     }
     return { beats: [] };
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 }
 const page = async () => {
