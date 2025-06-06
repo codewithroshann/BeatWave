@@ -9,7 +9,7 @@ import DeleteFromCart from "../ClientButtons/DeleteFromCart";
 const cart = ({ beats }: any) => {
   const cartBeats = beats.beats;
 
-  if (cartBeats.length == 0) {
+  if (cartBeats.length === 0||!cartBeats) {
     return (
       <div className="text-center text-white/20 duration-100 flex items-center justify-center h-[500px] text-6xl mt-8 font-bold">
         Empty Cart <FaShoppingCart />
