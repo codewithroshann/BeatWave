@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import { BeatUploadForm } from "@/components/controlPanel/BeatUploadForm";
 import { BeatsTable } from "@/components/controlPanel/BeatsTable";
@@ -20,7 +22,7 @@ async function getBeats() {
 }
 const page = async () => {
   const data = await getBeats();
-  console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
+
 
   return (
     <>

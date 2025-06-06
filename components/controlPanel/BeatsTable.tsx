@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+export const dynamic = 'force-dynamic'
+import { useState,useEffect } from "react";
 import Image from "next/image";
 import { MoreHorizontal, Play, Pause } from "lucide-react";
 
