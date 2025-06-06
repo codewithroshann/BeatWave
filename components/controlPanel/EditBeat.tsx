@@ -49,7 +49,7 @@ export function EditBeat({ beat, model }: any) {
     setIsUploading(true);
     try {
       const response = await fetch(
-        `http://localhost:8000/admin/update/${beat._id}`,
+        process.env.NEXT_PUBLIC_BACKEND_URL+`/admin/update/${beat._id}`,
         {
           method: "POST",
           headers: {

@@ -12,7 +12,7 @@ const BeatList =({ count }: { count?: number }) => {
     useEffect(() => {
     const getBeats = async () => {
       try {
-        const response = await fetch("http://localhost:8000/explore", {
+        const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/explore", {
           method: "GET",
           cache: "no-store",
         });

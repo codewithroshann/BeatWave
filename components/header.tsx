@@ -35,7 +35,7 @@ export function Header() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const response = await fetch("http://localhost:8000/check-auth", {
+      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/check-auth", {
         credentials: "include",
       });
       if (response.ok) {
@@ -60,7 +60,7 @@ export function Header() {
   }, []);
 
   const logOut = async () => {
-    const response = await fetch("http://localhost:8000/user/logout", {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/user/logout", {
       method: "POST",
       credentials: "include",
     });

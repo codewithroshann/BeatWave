@@ -11,7 +11,7 @@ const AddToCart = () => {
   const dispatch = useDispatch();
   const handleCart = async () => {
     const response = await fetch(
-      `http://localhost:8000/addtocart/${params.id}`,
+      process.env.NEXT_PUBLIC_BACKEND_URL+`/addtocart/${params.id}`,
       {
         method: "POST",
         credentials: "include",

@@ -47,7 +47,7 @@ export function BeatsTable({ beats }: { beats: any }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8000/admin/${value}`, {
+      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+`/admin/${value}`, {
         method: "GET",
         cache: "no-store",
       });
@@ -79,7 +79,7 @@ export function BeatsTable({ beats }: { beats: any }) {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/admin/${id}`, {
+      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+`/admin/${id}`, {
         method: "DELETE",
         credentials: "include",
       });

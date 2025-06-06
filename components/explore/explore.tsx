@@ -59,7 +59,7 @@ const explore = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8000/get/${value}`, {
+      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+`get/${value}`, {
         method: "GET",
         cache: "no-store",
       });
@@ -95,7 +95,7 @@ const explore = () => {
   const applyFilters = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/filter/genre=${filters.genre || "none"}/bpm=${
+        process.env.NEXT_PUBLIC_BACKEND_URL+`/filter/genre=${filters.genre || "none"}/bpm=${
           filters.bpmRange || "none"
         }`,
         {

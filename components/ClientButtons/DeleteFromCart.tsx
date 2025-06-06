@@ -12,7 +12,7 @@ const DeleteFromCart = ({ beatId }: { beatId: any }) => {
   const removeFromCart = async (id: any) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/removefromcart/${id}`,
+        process.env.NEXT_PUBLIC_BACKEND_URL+`/removefromcart/${id}`,
         {
           method: "DELETE",
           credentials: "include",

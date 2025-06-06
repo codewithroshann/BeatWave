@@ -7,7 +7,7 @@ import { FaSearch } from "react-icons/fa";
 
 async function getBeats() {
   try {
-    const response = await fetch("http://localhost:8000/relese/beats", {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/relese/beats", {
       method: "GET",
       cache: "no-store",
     });
@@ -20,6 +20,7 @@ async function getBeats() {
 }
 const page = async () => {
   const data = await getBeats();
+  console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
 
   return (
     <>

@@ -16,7 +16,7 @@ const LoginForm = () => {
   const handleLogin = async (e: any) => {
     e.preventDefault(); // Prevent page reload
     try {
-      const response = await fetch("http://localhost:8000/auth/user/login", {
+      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/auth/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

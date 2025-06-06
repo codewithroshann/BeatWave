@@ -24,7 +24,7 @@ import AddToCart from "@/components/ClientButtons/AddToCart";
 
 async function getBeat(id:string) {
   try {
-    const response = await fetch(`http://localhost:8000/beat/${id}`, {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+`/beat/${id}`, {
       method: "GET",
       cache: "no-store",
     });

@@ -81,23 +81,27 @@ export function BeatUploadForm() {
     e.preventDefault();
     setIsUploading(true);
     try {
-      const response = await fetch("http://localhost:8000/beat-uploads", {
+      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/beat-uploads", {
         method: "POST",
         body: formData,
       });
-     if(response.ok){
-      const data = await response.json();
-      setIsUploading(false);
-      dispatch(setAlert({ message: data.message, type: data.type }));
-      if (data.redirectUrl) {
-        setTimeout(() => {
-          router.push(data.redirectUrl);
-          dispatch(clearAlert());
-        }, 2500);
+      if (response.ok) {
+        const data = await response.json();
+        setIsUploading(false);
+        dispatch(setAlert({ message: data.message, type: data.type }));
+        if (data.redirectUrl) {
+          setTimeout(() => {
+            router.push(data.redirectUrl);
+            dispatch(clearAlert());
+          }, 2500);
+        }
       }
-     }else{
-      dispatch(setAlert({ message: "Something went wrong!", type: "error" }));
-     }
+      if (!response.ok) {
+        const data = await response.json();
+        console.log(data);
+        dispatch(setAlert({ message: data.message, type: data.type }));
+       
+      }
     } catch (error) {
       console.log(error);
     }
@@ -199,6 +203,7 @@ export function BeatUploadForm() {
                     placeholder="Describe your beat..."
                     className="h-24"
                     onChange={(e) => setDescription(e.target.value)}
+                    required
                   />
                 </div>
 
@@ -226,6 +231,7 @@ export function BeatUploadForm() {
                           accept="image/*"
                           className="hidden"
                           onChange={handleThumbnailChange}
+                          required
                         />
                       </div>
                     ) : (
@@ -274,6 +280,7 @@ export function BeatUploadForm() {
                           accept=".mp3,.wav"
                           className="hidden"
                           onChange={handleBeatFileChange}
+                          required
                         />
                       </div>
                     ) : (

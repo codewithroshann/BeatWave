@@ -34,7 +34,7 @@ const Signupform = () => {
 
         try {
             // Send POST request using fetch
-            const response = await fetch('http://localhost:8000/auth/user/signup', {
+            const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+'/auth/user/signup', {
                 method: 'POST', // Set method to POST
                 headers: {
                     'Content-Type': 'application/json', // Set the content type to JSON

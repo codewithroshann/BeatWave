@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 async function getCart() {
   const cookieStore =await cookies();
   const token = cookieStore.get("token")?.value;
-  const response = await fetch("http://localhost:8000/cart",{
+  const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/cart",{
     method:"GET",
     headers: {
       Cookie: `token=${token}`

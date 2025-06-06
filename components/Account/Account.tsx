@@ -37,7 +37,7 @@ const Account = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8000/update-profile", {
+      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/update-profile", {
         method: "POST",
         credentials: "include",
         headers: {
