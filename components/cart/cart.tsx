@@ -7,7 +7,6 @@ import { Button } from "../ui/button";
 import DeleteFromCart from "../ClientButtons/DeleteFromCart";
 
 const cart = ({ beats }: any) => {
-
   const cartBeats = beats.beats;
 
   if (cartBeats.length == 0) {

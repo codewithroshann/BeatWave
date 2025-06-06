@@ -59,7 +59,7 @@ const explore = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+`get/${value}`, {
+      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+`/get/${value}`, {
         method: "GET",
         cache: "no-store",
       });
