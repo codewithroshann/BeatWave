@@ -30,8 +30,7 @@ const LoginForm = () => {
       setLoading(true);
       if (response.ok) {
         const data = await response.json();
-        console.log(data)
-        dispatch(setAlert({ message: data.message, type: data.type }));
+          dispatch(setAlert({ message: data.message, type: data.type }));
         dispatch(userData(data.user));
         if (data.redirectUrl) {
           setTimeout(() => {
