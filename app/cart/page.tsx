@@ -26,7 +26,7 @@ async function getCart() {
 }
 const page = async () => {
   const data = await getCart();
-  const beats = data?.beats || [];
+  const beats = await data?.beats || [];
   return (
     <>
       <div className="min-h-screen flex flex-col bg-background">
