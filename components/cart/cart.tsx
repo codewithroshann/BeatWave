@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import HeroImage from "@/public/hero-image.jpg";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -5,11 +6,40 @@ import { FaRupeeSign } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button } from "../ui/button";
 import DeleteFromCart from "../ClientButtons/DeleteFromCart";
+import { useEffect, useState } from "react";
 interface CartProps {
-  beats: { beats: any[] };
+  getCart: any;
 }
 
-const cart = ({ beats }: CartProps) => {
+const cart =  () => {
+  const [data,setData] = useState([]);
+  useEffect(() => {
+    const getCart = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/cart`,
+          {
+            method: "GET",
+            credentials: "include",
+            cache: "no-store",
+          }
+        );
+        if (response.ok) {
+        const res= await response.json();
+        setData(res);
+        }
+        return { beats: [] };
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getCart();
+  },[]);
+
+  const { beats }: any = data;
+  console.log(data);
+
   const cartBeats = beats?.beats;
 
   if (!beats || !cartBeats || cartBeats.length === 0) {
