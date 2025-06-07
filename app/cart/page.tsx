@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import React from "react";
 import Cart from "@/components/cart/cart";
 import { cookies } from "next/headers";
@@ -11,6 +12,7 @@ async function getCart() {
       process.env.NEXT_PUBLIC_BACKEND_URL + "/cart",
       {
         method: "GET",
+        credentials: "include",
         headers: {
           Cookie: `token=${token}`,
         },
@@ -26,7 +28,7 @@ async function getCart() {
 }
 const page = async () => {
   const data = await getCart();
-  const beats = await data?.beats || [];
+  const beats =  data?.beats || [];
   return (
     <>
       <div className="min-h-screen flex flex-col bg-background">

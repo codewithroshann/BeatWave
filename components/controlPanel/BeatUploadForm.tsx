@@ -82,10 +82,14 @@ export function BeatUploadForm() {
     e.preventDefault();
     setIsUploading(true);
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/beat-uploads", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND_URL + "/beat-uploads",
+        {
+          method: "POST",
+          credentials:"include",
+          body: formData,
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         setIsUploading(false);
@@ -101,7 +105,6 @@ export function BeatUploadForm() {
         const data = await response.json();
         console.log(data);
         dispatch(setAlert({ message: data.message, type: data.type }));
-       
       }
     } catch (error) {
       console.log(error);
@@ -109,12 +112,11 @@ export function BeatUploadForm() {
   };
   return (
     <>
-
       <form
         className="container"
         onSubmit={handleSubmit}
         encType="multipart/form-data"
-        >
+      >
         <Card className="w-full bg-zinc-800">
           <CardContent className="p-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -327,9 +329,6 @@ export function BeatUploadForm() {
       ) : (
         ""
       )}
-
-      
-       
     </>
   );
 }
