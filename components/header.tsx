@@ -41,7 +41,7 @@ export function Header() {
       if (response.ok) {
         const data = await response.json();
 
-        if (data.isLogedIn == true) {
+        if (data.isLogedIn === true) {
           dispatch(userData(data.user));
           setIsLogedIn(data.isLogedIn);
           setCart(data.cart);
@@ -54,7 +54,7 @@ export function Header() {
 
     const interval = setInterval(() => {
       checkAuth();
-    }, 1000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, []);
