@@ -23,6 +23,8 @@ const getBeats = async (genre: string) => {
 const page = async ({ params }: any) => {
   const genre  = decodeURIComponent(await params.genre);
   const {beats} = await  getBeats(genre);
+if(!beats||beats.length==0)return  <div className="text-center text-white/20 duration-100 flex items-center justify-center h-[500px] text-6xl mt-8 font-bold">Beat Not Found!</div>
+
 
   return (
     <>
@@ -48,7 +50,7 @@ const page = async ({ params }: any) => {
           </Link>
 
           <div className="grid grid-cols-2 beat-container sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-5 sm:gap-5">
-          {beats.map((beat:any)=>{return <BeatCard key={beat._id} beat={beat} />}) }
+          {beats.reverse().map((beat:any)=>{return <BeatCard key={beat._id} beat={beat} />}) }
           </div>
 
         </div>
