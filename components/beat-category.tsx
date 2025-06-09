@@ -8,33 +8,45 @@ export function Beatcategory() {
           <h2 className="text-3xl font-bold mb-12 text-center ">Browse by Category</h2>
           <div className="grid grid-cols-2 mt-6 md:grid-cols-4 gap-4">
 
-            <div className="bg-muted hover:bg-primary/10 transition-colors rounded-lg p-4 text-center cursor-pointer">
+            <Link href={"/explore/genre/trap"} className="bg-muted hover:bg-primary/10 transition-colors rounded-lg p-4 text-center cursor-pointer">
               <div className="bg-primary/20 h-12 w-12 rounded-full flex items-center justify-center mx-auto mb-3">
                 <span className="text-primary font-bold">🔊</span>
               </div>
               <h3 className="font-medium">Trap</h3>
-            </div>
+            </Link>
 
-            <div className="bg-muted hover:bg-primary/10 transition-colors rounded-lg p-4 text-center cursor-pointer">
+            <Link href={"/explore/genre/drill"} className="bg-muted hover:bg-primary/10 transition-colors rounded-lg p-4 text-center cursor-pointer">
               <div className="bg-primary/20 h-12 w-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-primary font-bold">🔊</span>
+                <span className="text-primary font-bold">🎶</span>
               </div>
               <h3 className="font-medium">Drill</h3>
-            </div>
+            </Link>
 
-            <div className="bg-muted hover:bg-primary/10 transition-colors rounded-lg p-4 text-center cursor-pointer">
+            <Link href={"/explore/genre/rnb"} className="bg-muted hover:bg-primary/10 transition-colors rounded-lg p-4 text-center cursor-pointer">
               <div className="bg-primary/20 h-12 w-12 rounded-full flex items-center justify-center mx-auto mb-3">
                 <span className="text-primary font-bold">🎹</span>
               </div>
               <h3 className="font-medium">R&B</h3>
-            </div>
+            </Link>
 
-            <div className="bg-muted hover:bg-primary/10 transition-colors rounded-lg p-4 text-center cursor-pointer">
+            <Link href={"/explore/genre/lofi"} className="bg-muted hover:bg-primary/10 transition-colors rounded-lg p-4 text-center cursor-pointer">
               <div className="bg-primary/20 h-12 w-12 rounded-full flex items-center justify-center mx-auto mb-3">
                 <span className="text-primary font-bold">🎧</span>
               </div>
               <h3 className="font-medium">Lo-Fi</h3>
-            </div>
+            </Link>
+            <Link href={"/explore/genre/pop"} className="bg-muted hover:bg-primary/10 transition-colors rounded-lg p-4 text-center cursor-pointer">
+              <div className="bg-primary/20 h-12 w-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-primary font-bold">🎷</span>
+              </div>
+              <h3 className="font-medium">Pop</h3>
+            </Link>
+            <Link href={"/explore/genre/hip hop"} className="bg-muted hover:bg-primary/10 transition-colors rounded-lg p-4 text-center cursor-pointer">
+              <div className="bg-primary/20 h-12 w-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-primary font-bold">📻</span>
+              </div>
+              <h3 className="font-medium">Hip-Hop</h3>
+            </Link>
 
            
 
