@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { BeatCard } from "@/components/beat-card";
+
 const getBeats = async (genre: string) => {
   try {
     const response = await fetch(
@@ -20,7 +21,7 @@ const getBeats = async (genre: string) => {
 };
 
 const page = async ({ params }: any) => {
-  const { genre } = await params;
+  const genre  = decodeURIComponent(await params.genre);
   const {beats} = await  getBeats(genre);
 
   return (
