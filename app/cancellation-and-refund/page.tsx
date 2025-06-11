@@ -266,9 +266,9 @@ export default function RefundPage() {
                     contact us:
                   </p>
                   <div className="mt-3 text-white">
-                    <p>Email: refunds@beatwave.com</p>
+                    <p>Email: refunds@beatwave.in</p>
                     <p>Response Time: Within 24-48 hours</p>
-                    <p>Phone: [91+7869235983] (Business hours only)</p>
+                    <p>Phone: 91+7869235983 (Business hours only)</p>
                   </div>
                 </section>
               </div>

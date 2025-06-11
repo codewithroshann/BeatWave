@@ -98,7 +98,7 @@ export function Footer() {
               </div>
               <div className="flex items-center mt-2 text-sm">
                 <Mail className="mr-2 h-4 w-4" />
-                <span>support@beatwave.com</span>
+                <span>support@beatwave.in</span>
               </div>
             </div>
           </div>

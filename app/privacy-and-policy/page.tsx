@@ -35,7 +35,7 @@ const page = () => {
             <li className='ml-5 mb-2'>Request a copy of your data</li>
             <li className='ml-5 mb-2'>Request that we stop using your data</li>
           </ul>
-          <p className='text-base leading-relaxed mb-5'>To exercise any of these rights, please contact us at <Link className='text-primary hover:underline' href="mailto:support@beatwave.com">support@beatwave.in</Link> .</p>
+          <p className='text-base leading-relaxed mb-5'>To exercise any of these rights, please contact us at <Link className='text-primary hover:underline' href="mailto:support@beatwave.in">support@beatwave.in</Link> .</p>
           <h3 className='text-2xl font-semibold mt-3 mb-2'>7. Children's Privacy</h3>
           <p className='text-base leading-relaxed mb-5'>Beat Wave is not intended for children under the age of 13. We do not knowingly collect personal data from children. If we learn we have collected such data, we will delete it promptly.</p>
           <h3 className='text-2xl font-semibold mt-3 mb-2'>8. Third-Party Links</h3>

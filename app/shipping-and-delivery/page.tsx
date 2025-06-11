@@ -254,12 +254,12 @@ export default function ShippingPage() {
                   <h2 className="text-xl font-semibold mb-4">12. Contact Information</h2>
                   <p className="text-white leading-relaxed">For delivery-related questions or technical support:</p>
                   <div className="mt-3 text-white">
-                    <p>Email: support@beatwave.com</p>
-                    <p>Technical Support: tech@beatwave.com</p>
+                    <p>Email: support@beatwave.in</p>
+                    <p>Technical Support: tech@beatwave.in</p>
                     <p>Live Chat: Available 24/7 on our website</p>
                     <p>Response Time: Within 2-4 hours during business days</p>
-                    <p>Emergency Support: [Your Emergency Contact] (for urgent delivery issues)</p>
-                  </div>
+                    <p>Emergency Support: 91+7869235983 (for urgent delivery issues)</p>
+                  </div> 
                 </section>
               </div>
             </CardContent>

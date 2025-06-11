@@ -175,9 +175,9 @@ export default function TermsPage() {
                     If you have any questions about these Terms and Conditions, please contact us at:
                   </p>
                   <div className="mt-3 text-white">
-                    <p>Email: legal@beatwave.com</p>
-                    <p>Address: [Your Business Address]</p>
-                    <p>Phone: [Your Contact Number]</p>
+                    <p>Email: legal@beatwave.in</p>
+                    <p>Address: Ashok Nagar sarkanda Bilaspur Chhattishgarh</p>
+                    <p>Phone:91+7869235983</p>
                   </div>
                 </section>
               </div>
