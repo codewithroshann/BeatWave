@@ -22,7 +22,7 @@ export default function ContactPage() {
               <Mail className="mr-3 h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="font-medium">Email</p>
-                <p className="text-muted-foreground">info@beatstore.com</p>
+                <p className="text-muted-foreground">support@beatstore.in</p>
               </div>
             </div>
 
@@ -30,7 +30,7 @@ export default function ContactPage() {
               <Phone className="mr-3 h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="font-medium">Phone</p>
-                <p className="text-muted-foreground">(123) 456-7890</p>
+                <p className="text-muted-foreground">91+7869235983</p>
               </div>
             </div>
 
@@ -38,7 +38,7 @@ export default function ContactPage() {
               <MapPin className="mr-3 h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="font-medium">Location</p>
-                <p className="text-muted-foreground">Los Angeles, CA</p>
+                <p className="text-muted-foreground">Ashok Nagar,Bilaspur,Chhattishgarh</p>
               </div>
             </div>
           </div>

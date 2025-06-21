@@ -1,111 +1,103 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
-
-
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  subject: z.string().min(5, {
-    message: "Subject must be at least 5 characters.",
-  }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
-  }),
-})
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Label } from "@radix-ui/react-label";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 export default function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const router = useRouter();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    },
-  })
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/contact-us`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            subject,
+            message,
+          }),
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+      }
+      if (!res.ok) {
+        const data = await res.json();
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  
   return (
-    <Form {...form}>
-      <form className="space-y-6">
-        <FormField
-          control={form.control}
+    <form onSubmit={handleSubmit}>
+      <div className="space-y-2 mb-3">
+        <Label htmlFor="name">Name</Label>
+        <Input
+          type="text"
+          id="name"
           name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Your name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          required
+          placeholder="Your Name"
+          onChange={(e) => setName(e.target.value)}
         />
-
-        <FormField
-          control={form.control}
+      </div>
+      <div className="space-y-2 mb-3">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          type="email"
+          id="email"
           name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="your.email@example.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          required
+          placeholder="example@email.com"
+          onChange={(e) => setEmail(e.target.value)}
         />
-
-        <FormField
-          control={form.control}
+      </div>
+      <div className="space-y-2 mb-3">
+        <Label htmlFor="subject">Subject</Label>
+        <Input
+          type="text"
+          id="subject"
           name="subject"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Subject</FormLabel>
-              <FormControl>
-                <Input placeholder="What is this regarding?" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          required
+          placeholder="What is this regarding?"
+          onChange={(e) => setSubject(e.target.value)}
         />
-
-        <FormField
-          control={form.control}
+      </div>
+      <div className="space-y-2 mb-3">
+        <Label htmlFor="message">Message</Label>
+        <Textarea
+          id="message"
           name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Message</FormLabel>
-              <FormControl>
-                <Textarea placeholder="Tell us what you need..." className="min-h-[120px]" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          rows={5}
+          className="resize-none"
+          required
+          placeholder="Tell us What You Need?"
+          onChange={(e) => setMessage(e.target.value)}
         />
+      </div>
 
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Sending..." : "Send Message"}
-        </Button>
-      </form>
-    </Form>
-  )
+      <Button type="submit" className="float-right">
+        Submit
+      </Button>
+    </form>
+  );
 }

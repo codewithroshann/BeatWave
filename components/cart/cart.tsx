@@ -7,12 +7,15 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Button } from "../ui/button";
 import DeleteFromCart from "../ClientButtons/DeleteFromCart";
 import { useEffect, useState } from "react";
+import { load } from "@cashfreepayments/cashfree-js";
 interface CartProps {
   getCart: any;
 }
 
-const cart =  () => {
-  const [data,setData] = useState([]);
+const cart = () => {
+  const [orderId, setOrderId] = useState("");
+  console.log(orderId,"top")
+  const [data, setData] = useState([]);
   useEffect(() => {
     const getCart = async () => {
       try {
@@ -25,8 +28,8 @@ const cart =  () => {
           }
         );
         if (response.ok) {
-        const res= await response.json();
-        setData(res);
+          const res = await response.json();
+          setData(res);
         }
         return { beats: [] };
       } catch (error) {
@@ -35,13 +38,9 @@ const cart =  () => {
     };
 
     getCart();
-  },[]);
-
+  }, []);
   const { beats }: any = data;
-  console.log(data);
-
   const cartBeats = beats?.beats;
-
   if (!beats || !cartBeats || cartBeats.length === 0) {
     return (
       <div className="text-center text-white/20 duration-100 flex items-center justify-center h-[500px] text-6xl mt-8 font-bold">
@@ -49,6 +48,76 @@ const cart =  () => {
       </div>
     );
   }
+
+  //Cashfree payment configration
+  let cashfree: any;
+  var initializeSDK = async function () {
+    cashfree = await load({
+      mode: "sandbox",
+    });
+  };
+  initializeSDK();
+
+  const getSessionId = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/checkout/payment`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        if (data.payment_session_id) {
+          setOrderId(data.order_id);
+          return data.payment_session_id;
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const verifyPayment = async (orderId: any) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/checkout/verify`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ orderId }),
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClick = async (e: any) => {
+    e.preventDefault();
+    try {
+      let sessionId = await getSessionId();
+      let checkoutOptions = {
+        paymentSessionId: sessionId,
+        redirectTarget: "_modal ",
+      };
+      cashfree
+        .checkout(checkoutOptions)
+        .then((response: any) => console.log(response));
+      console.log(orderId, "orderId");
+      await verifyPayment(orderId);
+      return;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -147,7 +216,10 @@ const cart =  () => {
             </span>
           </div>
 
-          <Button className="bg-white hover:bg-white/80 duration-100  text-black p-2 mt-3 rounded-sm w-full">
+          <Button
+            className="bg-white hover:bg-white/80 duration-100  text-black p-2 mt-3 rounded-sm w-full"
+            onClick={handleClick}
+          >
             Pay
             <span className="font-bold ml-2">
               {Array.isArray(cartBeats) &&
