@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+ import { defineConfig } from 'vite'
 // see https://github.com/vitejs/vite/issues/7281#issuecomment-1209787785
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ViteEnv {}

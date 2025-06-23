@@ -2,20 +2,36 @@
 import Image from "next/image";
 import HeroImage from "@/public/hero-image.jpg";
 import { RiDeleteBinLine } from "react-icons/ri";
+
 import { FaRupeeSign } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button } from "../ui/button";
 import DeleteFromCart from "../ClientButtons/DeleteFromCart";
 import { useEffect, useState } from "react";
+import { setAlert, clearAlert } from "@/redux/slices/AlertReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 import { load } from "@cashfreepayments/cashfree-js";
+function getTotalCartPrice(beats: any[] | undefined): number {
+  if (!Array.isArray(beats)) return 0;
+
+  return beats
+    .map((item) =>
+      parseFloat((item?.price ?? "0").toString().replace(/,/g, ""))
+    )
+    .reduce((prev, curr) => prev + curr, 0);
+}
 interface CartProps {
   getCart: any;
 }
 
 const cart = () => {
-  const [orderId, setOrderId] = useState("");
-  console.log(orderId,"top")
   const [data, setData] = useState([]);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const userData = useSelector((state: any) => state.auth.user);
+
+
   useEffect(() => {
     const getCart = async () => {
       try {
@@ -48,6 +64,7 @@ const cart = () => {
       </div>
     );
   }
+  const cartPrice = getTotalCartPrice(cartBeats);
 
   //Cashfree payment configration
   let cashfree: any;
@@ -58,20 +75,36 @@ const cart = () => {
   };
   initializeSDK();
 
-  const getSessionId = async () => {
-    try {
+  const getSessionId = async (price: number) => {
+      try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/checkout/payment`,
         {
-          method: "GET",
+          method: "POST",
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userData, price }),
         }
       );
       if (res.ok) {
         const data = await res.json();
         if (data.payment_session_id) {
-          setOrderId(data.order_id);
-          return data.payment_session_id;
+          return {
+            sessionId: data.payment_session_id,
+            orderId: data.order_id,
+          };
+        }
+        if (!res.ok) {
+          const data = await res.json();
+          if (data.message && data.redirectUrl) {
+            dispatch(setAlert({ message: data.message, type: data.type }));
+            setTimeout(() => {
+              dispatch(clearAlert());
+              router.push(data.redirectUrl);
+            }, 2500);
+          }
         }
       }
     } catch (err) {
@@ -91,29 +124,43 @@ const cart = () => {
           body: JSON.stringify({ orderId }),
         }
       );
+
       if (res.ok) {
-        const data = await res.json();
-        console.log(data);
+        try {
+          const data = await res.json();
+          console.log(data);
+        } catch (jsonError) {
+          console.error("Failed to parse JSON response:", jsonError);
+        }
+      } else {
+        console.error("Request failed with status:", res.status);
+        const contentType = res.headers.get("Content-Type");
+        if (contentType && contentType.includes("application/json")) {
+          const data = await res.json();
+          console.log(data);
+        } else {
+          const text = await res.text();
+          console.error("Non-JSON response:", text);
+        }
       }
     } catch (error) {
-      console.log(error);
+      console.error("Network or server error:", error);
     }
   };
 
-  const handleClick = async (e: any) => {
-    e.preventDefault();
+  const handleClick = async (price: number) => {
+  
     try {
-      let sessionId = await getSessionId();
+      let session = await getSessionId(price);
+      if (!session) return;
+      const { sessionId, orderId } = session;
       let checkoutOptions = {
         paymentSessionId: sessionId,
-        redirectTarget: "_modal ",
+        redirectTarget: "_modal",
       };
-      cashfree
-        .checkout(checkoutOptions)
-        .then((response: any) => console.log(response));
-      console.log(orderId, "orderId");
+      await cashfree.checkout(checkoutOptions);
       await verifyPayment(orderId);
-      return;
+         return;
     } catch (error) {
       console.log(error);
     }
@@ -173,15 +220,7 @@ const cart = () => {
             <span className="flex items-center">
               {" "}
               <FaRupeeSign className="text-xs" />
-              {Array.isArray(cartBeats) &&
-                cartBeats
-                  .map((item: any) =>
-                    parseFloat(
-                      (item?.price ?? "0").toString().replace(/,/g, "")
-                    )
-                  )
-                  .reduce((prev: number, curr: number) => prev + curr, 0)
-                  .toLocaleString()}
+              {cartPrice.toLocaleString()}
             </span>
           </div>
           <div className="grid grid-cols-2 ">
@@ -204,34 +243,16 @@ const cart = () => {
             <h3 className="text-2xl font-bold text-primary">Total: </h3>{" "}
             <span className="flex items-center text-xl">
               <FaRupeeSign className="text-md" />
-              {Array.isArray(cartBeats) &&
-                cartBeats
-                  .map((item: any) =>
-                    parseFloat(
-                      (item?.price ?? "0").toString().replace(/,/g, "")
-                    )
-                  )
-                  .reduce((prev, curr) => prev + curr, 0)
-                  .toLocaleString()}
+              {cartPrice.toLocaleString()}
             </span>
           </div>
 
           <Button
             className="bg-white hover:bg-white/80 duration-100  text-black p-2 mt-3 rounded-sm w-full"
-            onClick={handleClick}
+            onClick={() => handleClick(cartPrice)}
           >
             Pay
-            <span className="font-bold ml-2">
-              {Array.isArray(cartBeats) &&
-                cartBeats
-                  .map((item: any) =>
-                    parseFloat(
-                      (item?.price ?? "0").toString().replace(/,/g, "")
-                    )
-                  )
-                  .reduce((prev, curr) => prev + curr, 0)
-                  .toLocaleString()}
-            </span>
+            <span className="font-bold ml-2">{cartPrice.toLocaleString()}</span>
           </Button>
         </div>
       </div>

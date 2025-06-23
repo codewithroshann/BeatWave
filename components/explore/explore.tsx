@@ -36,8 +36,8 @@ const explore = () => {
     genre: "",
     bpmRange: [60, 200],
   });
-  console.log(filters);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+ 
+   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const GENRES = [
     "Hip Hop",

@@ -16,28 +16,30 @@ const LoginForm = () => {
   const handleLogin = async (e: any) => {
     e.preventDefault(); // Prevent page reload
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/auth/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND_URL + "/auth/user/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+          credentials: "include",
+        }
+      );
       setLoading(true);
       if (response.ok) {
         const data = await response.json();
-          dispatch(setAlert({ message: data.message, type: data.type }));
-   
+        dispatch(setAlert({ message: data.message, type: data.type }));
         dispatch(userData(data.user));
-        if (data.redirectUrl) {
-          setTimeout(() => {
-            router.push(data.redirectUrl);
-          }, 2500);
-        }
+        router.push(data.redirectUrl);
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       } else {
         const errorMsg = await response.json();
         setMessage(errorMsg.message);

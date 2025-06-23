@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, ShoppingCart, Menu, X, User } from "lucide-react";
+import { Search, ShoppingBag, ShoppingCart, Menu, X, User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,9 +35,12 @@ export function Header() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/check-auth", {
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND_URL + "/check-auth",
+        {
+          credentials: "include",
+        }
+      );
       if (response.ok) {
         const data = await response.json();
 
@@ -52,24 +55,30 @@ export function Header() {
       }
     };
 
-    const interval = setInterval(() => {
-      checkAuth();
-    }, 2000);
+    // const interval = setInterval(() => {
+    // }, 2000);
+    checkAuth();
 
-    return () => clearInterval(interval);
+    // return () => clearInterval(interval);
   }, []);
 
   const logOut = async () => {
-    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+"/user/logout", {
-      method: "POST",
-      credentials: "include",
-    });
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/user/logout",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
     if (response.ok) {
       const data = await response.json();
       setIsLogedIn(data.isLogedIn);
       dispatch(setAlert({ message: "Logout Successfully!", type: "success" }));
       dispatch(userLogedOut());
       router.push("/");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } else {
       const errorMsg = await response.json();
       dispatch(setAlert({ message: errorMsg.message, type: "error" }));
@@ -117,21 +126,21 @@ export function Header() {
                   Cart
                 </Link>
                 {data?.role === "admin" ? (
-            <Link
-              href="/auth/admin/controlpanel"
-              className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
-            >
-              Control Panel
-            </Link>
-          ) : (
-            ""
-          )}
-               <Link
-              href="/account"
-              className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
-            >
-             Account
-            </Link>
+                  <Link
+                    href="/auth/admin/controlpanel"
+                    className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
+                  >
+                    Control Panel
+                  </Link>
+                ) : (
+                  ""
+                )}
+                <Link
+                  href="/account"
+                  className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
+                >
+                  Account
+                </Link>
               </nav>
             </SheetContent>
           </Sheet>
@@ -259,7 +268,7 @@ export function Header() {
               </div>
             ) : (
               <div
-                className={`flex  flex-col absolute bottom-[-100px] bg-zinc-800 rounded-md w-[120px] py-2 px-3 right-[10px]  ${open}`}
+                className={`flex  flex-col absolute bottom-[-100px] bg-zinc-800 rounded-md h-[max-content] w-[150px] py-2 px-3 right-[10px] top-[50px]  ${open}`}
               >
                 <Link
                   href="/account"
@@ -268,6 +277,14 @@ export function Header() {
                   {" "}
                   <LuUserPen className="text-xs" />
                   Account
+                </Link>
+                <Link
+                  href="/mypurchase"
+                  className="p-2  text-mb duration-100 rounded-md hover:bg-zinc-700/50 flex items-center gap-2"
+                >
+                  {" "}
+                  <ShoppingBag className="text-xs" />
+                  My Purchase
                 </Link>
                 <Button
                   onClick={logOut}
