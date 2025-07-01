@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { useParams, useRouter } from "next/navigation";
 import { setAlert, clearAlert } from "@/redux/slices/AlertReducer";
+import { addToCart } from "@/redux/slices/cartReducer";
 import { useDispatch } from "react-redux";
 const AddToCart = () => {
   const params = useParams();
@@ -11,7 +12,7 @@ const AddToCart = () => {
   const dispatch = useDispatch();
   const handleCart = async () => {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_BACKEND_URL+`/addtocart/${params.id}`,
+      process.env.NEXT_PUBLIC_BACKEND_URL + `/addtocart/${params.id}`,
       {
         method: "POST",
         credentials: "include",
@@ -19,9 +20,10 @@ const AddToCart = () => {
     );
     if (response.ok) {
       const data = await response.json();
-      if (data.message) {
-        dispatch(setAlert({ message: data.message, type: data.type }));
+      if (data.cart && data.cart !== null) {
+        dispatch(addToCart(data.cart));
       }
+      dispatch(setAlert({ message: data.message, type: data.type }));
     }
     if (!response.ok) {
       const errorMsg = await response.json();

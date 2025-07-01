@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { setAlert, clearAlert } from "@/redux/slices/AlertReducer";
-
+import { deleteFromCart } from "@/redux/slices/cartReducer";
 const DeleteFromCart = ({ beatId }: { beatId: any }) => {
   const dispatch = useDispatch();
   interface DeleteFromCartProps {
@@ -12,7 +12,7 @@ const DeleteFromCart = ({ beatId }: { beatId: any }) => {
   const removeFromCart = async (id: any) => {
     try {
       const response = await fetch(
-        process.env.NEXT_PUBLIC_BACKEND_URL+`/removefromcart/${id}`,
+        process.env.NEXT_PUBLIC_BACKEND_URL + `/removefromcart/${id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -20,12 +20,15 @@ const DeleteFromCart = ({ beatId }: { beatId: any }) => {
       );
       if (response.ok) {
         const data = await response.json();
-        if (data.message) {
-          dispatch(setAlert({ message: data.message, type: data.type }));
+        if (data.updatedCart) {
+          dispatch(deleteFromCart(id));
         }
+
+        dispatch(setAlert({ message: data.message, type: data.type }));
+
         setTimeout(() => {
           dispatch(clearAlert());
-          window.location.reload();          
+          window.location.reload();
         }, 2500);
       }
     } catch (error) {

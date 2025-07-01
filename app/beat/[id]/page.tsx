@@ -187,7 +187,7 @@ export default async function BeatPage({ params }: { params: { id: string } }) {
                     {beat.price}
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    Free For Profit
+                {beat.licenseType} License
                   </div>
                 </div>
 

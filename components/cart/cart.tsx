@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import DeleteFromCart from "../ClientButtons/DeleteFromCart";
 import { useEffect, useState } from "react";
 import { setAlert, clearAlert } from "@/redux/slices/AlertReducer";
+import { clearCart } from "@/redux/slices/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { load } from "@cashfreepayments/cashfree-js";
@@ -30,7 +31,6 @@ const cart = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const userData = useSelector((state: any) => state.auth.user);
-
 
   useEffect(() => {
     const getCart = async () => {
@@ -57,9 +57,10 @@ const cart = () => {
   }, []);
   const { beats }: any = data;
   const cartBeats = beats?.beats;
+  const itemsId = cartBeats?.map((item: any) => item._id);
   if (!beats || !cartBeats || cartBeats.length === 0) {
     return (
-      <div className="text-center text-white/20 duration-100 flex items-center justify-center h-[500px] text-6xl mt-8 font-bold">
+      <div className="text-center text-white/20 duration-100 flex items-center justify-center h-[500px] text-3xl sm:text-6xl mt-8 font-bold">
         Empty Cart <FaShoppingCart />
       </div>
     );
@@ -76,7 +77,7 @@ const cart = () => {
   initializeSDK();
 
   const getSessionId = async (price: number) => {
-      try {
+    try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/checkout/payment`,
         {
@@ -111,7 +112,7 @@ const cart = () => {
       console.log(err);
     }
   };
-  const verifyPayment = async (orderId: any) => {
+  const verifyPayment = async (orderId: any, itemsId: any) => {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/checkout/verify`,
@@ -121,37 +122,31 @@ const cart = () => {
             "Content-Type": "application/json",
           },
           credentials: "include",
-          body: JSON.stringify({ orderId }),
+          body: JSON.stringify({ orderId, itemsId }),
         }
       );
 
       if (res.ok) {
-        try {
-          const data = await res.json();
-          console.log(data);
-        } catch (jsonError) {
-          console.error("Failed to parse JSON response:", jsonError);
-        }
-      } else {
-        console.error("Request failed with status:", res.status);
-        const contentType = res.headers.get("Content-Type");
-        if (contentType && contentType.includes("application/json")) {
-          const data = await res.json();
-          console.log(data);
-        } else {
-          const text = await res.text();
-          console.error("Non-JSON response:", text);
-        }
+        const data = await res.json();
+        dispatch(clearCart());
+        router.push(data.redirectUrl);
       }
+      if (!res.ok) {
+        const data = await res.json();
+        dispatch(setAlert({ message: data.message, type: data.type }));
+      }
+      setTimeout(() => {
+        dispatch(clearAlert());
+      }, 2500);
     } catch (error) {
       console.error("Network or server error:", error);
     }
   };
 
-  const handleClick = async (price: number) => {
-  
+  const handleClick = async (price: number, itemsId: any) => {
     try {
       let session = await getSessionId(price);
+      console.log(session)
       if (!session) return;
       const { sessionId, orderId } = session;
       let checkoutOptions = {
@@ -159,8 +154,8 @@ const cart = () => {
         redirectTarget: "_modal",
       };
       await cashfree.checkout(checkoutOptions);
-      await verifyPayment(orderId);
-         return;
+      await verifyPayment(orderId, itemsId);
+      return;
     } catch (error) {
       console.log(error);
     }
@@ -178,7 +173,7 @@ const cart = () => {
                   <DeleteFromCart beatId={beat._id} />
                 </div>
                 <div className="flex p-3 flex-wrap border rounded-md">
-                  <div className="min-h-[100px] h-[100px] ">
+                  <div className="min-h-[100px] h-[100px] mb-2 ">
                     <Image
                       src={`${beat.thumbnail}`}
                       alt="image"
@@ -249,7 +244,7 @@ const cart = () => {
 
           <Button
             className="bg-white hover:bg-white/80 duration-100  text-black p-2 mt-3 rounded-sm w-full"
-            onClick={() => handleClick(cartPrice)}
+            onClick={() => handleClick(cartPrice, itemsId)}
           >
             Pay
             <span className="font-bold ml-2">{cartPrice.toLocaleString()}</span>

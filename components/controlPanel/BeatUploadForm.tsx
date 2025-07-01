@@ -86,7 +86,7 @@ export function BeatUploadForm() {
         process.env.NEXT_PUBLIC_BACKEND_URL + "/beat-uploads",
         {
           method: "POST",
-          credentials:"include",
+          credentials: "include",
           body: formData,
         }
       );
@@ -312,7 +312,15 @@ export function BeatUploadForm() {
             </div>
 
             <div className="flex justify-end gap-4 pt-4">
-              <Button type="button" variant="outline">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setBeatFile(null);
+                  setThumbnailFile(null);
+                  setIsUploading(false);
+                }}
+              >
                 Cancel
               </Button>
               <Button type="submit" disabled={isUploading || !beatFile}>

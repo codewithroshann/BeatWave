@@ -20,11 +20,12 @@ export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [open, setOpen] = useState("hidden");
   const [islogedIn, setIsLogedIn] = useState(false);
-  const [cart, setCart] = useState([0]);
+
   const dispatch = useDispatch();
   const router = useRouter();
-  const data = useSelector((state: any) => state.auth.user);
 
+  const data = useSelector((state: any) => state.auth.user);
+  const cart = useSelector((state: any) => state.cart.cart);
   const panelOpen = () => {
     if (open == "hidden") {
       setOpen("block");
@@ -47,7 +48,6 @@ export function Header() {
         if (data.isLogedIn === true) {
           dispatch(userData(data.user));
           setIsLogedIn(data.isLogedIn);
-          setCart(data.cart);
         } else {
           setIsLogedIn(data.isLogedIn);
           console.log("No User Found!");
@@ -227,7 +227,7 @@ export function Header() {
                 <span
                   className={`absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white
                    ${
-                     cart.length == 0 ? "" : "bg-red-500"
+                    cart.length == 0 ? "" : "bg-red-500"
                    }  top-[1px] right-0 rounded-full`}
                 >
                   {cart.length == 0 ? "" : cart.length}
