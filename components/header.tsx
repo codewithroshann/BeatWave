@@ -3,7 +3,18 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, ShoppingBag, ShoppingCart, Menu, X, User } from "lucide-react";
+import {
+  Search,
+  ShoppingBag,
+  ShoppingCart,
+  Menu,
+  X,
+  User,
+  House,
+  ListMusic,
+  TrendingUp,
+  CircleUser,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +26,7 @@ import { LuUserPen } from "react-icons/lu";
 import { IoIosLogOut } from "react-icons/io";
 import { setAlert, clearAlert } from "@/redux/slices/AlertReducer";
 import { userData, userLogedOut } from "@/redux/slices/AuthReducer";
+import Image from "next/image";
 
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -95,52 +107,65 @@ export function Header() {
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="h-5 w-5" />
+                <Menu className="h-7 w-7" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[240px] sm:w-[300px]">
+                <Link href="/" className="flex items-center gap-2">
+                  <img
+                    src={Logo.src}
+                    alt=""
+                    className=" md:inline-block h-9 w-9  rounded-full"
+                  />
+                  <span className="font-bold text-xl">BeatWave</span>
+                </Link>
               <nav className="flex flex-col gap-4 mt-6">
                 <Link
                   href="/"
-                  className="text-base font-medium transition-colors px-2 hover:bg-zinc-500/50"
+                  className=" flex gap-2 py-1 items center text-base font-medium transition-colors px-2 hover:bg-zinc-500/50"
                 >
+                  <House className="" />
                   Home
                 </Link>
                 <Link
                   href="/explore"
-                  className="text-base font-medium transition-colors px-2 hover:bg-zinc-500/50"
+                  className=" flex gap-2 py-1 items center text-base font-medium transition-colors px-2 hover:bg-zinc-500/50"
                 >
+                  <ListMusic />
                   Explore
                 </Link>
                 <Link
                   href="/trending"
-                  className="text-base font-medium transition-colors px-2  hover:bg-zinc-500/50"
+                  className="text-base flex gap-2 py-1 items-center font-medium transition-colors px-2  hover:bg-zinc-500/50"
                 >
+                  <TrendingUp />
                   Trending
                 </Link>
                 <Link
                   href="/cart"
-                  className="text-base font-medium transition-colors px-2 hover:bg-zinc-500/50"
+                  className="text-base flex gap-2 py-1 items-center font-medium transition-colors px-2 hover:bg-zinc-500/50"
                 >
+                  <ShoppingCart />
                   Cart
+                </Link>
+                <Link
+                  href="/account"
+                  className="text-sm flex gap-2 py-1 items-center font-medium transition-colors px-3  rounded-sm hover:bg-zinc-500/50 "
+                >
+                  <User />
+                  Account
                 </Link>
                 {data?.role === "admin" ? (
                   <Link
                     href="/auth/admin/controlpanel"
-                    className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
+                    className="text-base font-medium flex gap-2 py-1 items-center transition-colors px-3  rounded-sm hover:bg-zinc-500/50 "
                   >
                     Control Panel
                   </Link>
                 ) : (
                   ""
                 )}
-                <Link
-                  href="/account"
-                  className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
-                >
-                  Account
-                </Link>
               </nav>
             </SheetContent>
           </Sheet>
@@ -148,7 +173,7 @@ export function Header() {
             <img
               src={Logo.src}
               alt=""
-              className="hidden md:inline-block h-9 w-9  rounded-full"
+              className=" md:inline-block h-9 w-9  rounded-full"
             />
             <span className="font-bold text-xl">BeatWave</span>
           </Link>
@@ -157,20 +182,23 @@ export function Header() {
         <nav className="hidden md:flex items-center gap-6">
           <Link
             href="/"
-            className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50"
+            className="text-sm flex gap-1 items-center font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50"
           >
+            <House className="h-5 w-5" />
             Home
           </Link>
           <Link
             href="/explore"
-            className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50"
+            className="text-sm flex gap-1 items-center font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50"
           >
+            <ListMusic className="h-5 w-5" />
             Explore
           </Link>
           <Link
             href="/trending"
-            className="text-sm font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
+            className="text-sm flex gap-1 items-center font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
           >
+            <TrendingUp className="h-5 w-5" />
             Trending
           </Link>
           {data?.role === "admin" ? (
@@ -223,11 +251,15 @@ export function Header() {
           )} */}
           {islogedIn == true ? (
             <Link href="/cart">
-              <Button variant="ghost" size="icon" className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative bg-zinc-900"
+              >
                 <span
                   className={`absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white
                    ${
-                    cart.length == 0 ? "" : "bg-red-500"
+                     cart.length == 0 ? "" : "bg-red-500"
                    }  top-[1px] right-0 rounded-full`}
                 >
                   {cart.length == 0 ? "" : cart.length}
@@ -242,7 +274,7 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="relative"
+            className="relative bg-zinc-900"
             onClick={panelOpen}
           >
             <User className="h-5 w-5" />
