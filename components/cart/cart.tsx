@@ -163,7 +163,7 @@ const cart = () => {
 
   return (
     <>
-      <div className="flex flex-col min-h-full md:flex-row gap-5 mt-5">
+      <div className="flex flex-col md:flex-row gap-5 mt-5">
         <div className="flex flex-col gap-3 flex-1">
           {Array.isArray(cartBeats) &&
             cartBeats.reverse().map((beat: any, key) => (
