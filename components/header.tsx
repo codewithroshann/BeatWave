@@ -125,35 +125,35 @@ export function Header() {
                   href="/"
                   className=" flex gap-2 py-1 items center text-base font-medium transition-colors px-2 hover:bg-zinc-500/50"
                 >
-                  <House className="" />
+                  <House/>
                   Home
                 </Link>
                 <Link
                   href="/explore"
                   className=" flex gap-2 py-1 items center text-base font-medium transition-colors px-2 hover:bg-zinc-500/50"
                 >
-                  <ListMusic />
+                  <ListMusic/>
                   Explore
                 </Link>
                 <Link
                   href="/trending"
                   className="text-base flex gap-2 py-1 items-center font-medium transition-colors px-2  hover:bg-zinc-500/50"
                 >
-                  <TrendingUp />
+                  <TrendingUp/>
                   Trending
                 </Link>
                 <Link
                   href="/cart"
                   className="text-base flex gap-2 py-1 items-center font-medium transition-colors px-2 hover:bg-zinc-500/50"
                 >
-                  <ShoppingCart />
+                  <ShoppingCart/>
                   Cart
                 </Link>
                 <Link
                   href="/account"
                   className="text-sm flex gap-2 py-1 items-center font-medium transition-colors px-3  rounded-sm hover:bg-zinc-500/50 "
                 >
-                  <User />
+                  <User/>
                   Account
                 </Link>
                 {data?.role === "admin" ? (
@@ -175,7 +175,7 @@ export function Header() {
               alt=""
               className=" md:inline-block h-9 w-9  rounded-full"
             />
-            <span className="font-bold text-xl">BeatWave</span>
+            <span className=" font-bold text-xl">BeatWave</span>
           </Link>
         </div>
 
@@ -184,21 +184,21 @@ export function Header() {
             href="/"
             className="text-sm flex gap-1 items-center font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50"
           >
-            <House className="h-5 w-5" />
+            <House className="h-5 w-5"/>
             Home
           </Link>
           <Link
             href="/explore"
             className="text-sm flex gap-1 items-center font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50"
           >
-            <ListMusic className="h-5 w-5" />
+            <ListMusic className="h-5 w-5"/>
             Explore
           </Link>
           <Link
             href="/trending"
             className="text-sm flex gap-1 items-center font-medium transition-colors px-3 py-1 rounded-sm hover:bg-zinc-500/50 "
           >
-            <TrendingUp className="h-5 w-5" />
+            <TrendingUp className="h-5 w-5"/>
             Trending
           </Link>
           {data?.role === "admin" ? (
