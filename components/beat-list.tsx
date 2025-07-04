@@ -38,6 +38,12 @@ const BeatList =({ count }: { count?: number }) => {
   //   } else {
   //     setCurrentlyPlaying(beatId)
   //   }}
+
+if(!BEATS||BEATS.length===0){
+  return <Loading />
+}
+
+
   return (
 <>
 <div className="grid grid-cols-2 beat-container sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-5 sm:gap-5">
