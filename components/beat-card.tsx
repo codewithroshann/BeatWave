@@ -117,7 +117,7 @@ export function BeatCard({ beat }: BeatCardProps) {
           onClick={() => router.push(`/beat/${beat._id}`)}
         >
           <ShoppingCart className="h-4 w-4 " />
-          Cart
+         
         </Button>
       </CardFooter>
     </Card>
