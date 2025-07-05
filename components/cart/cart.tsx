@@ -152,6 +152,7 @@ const cart = () => {
         paymentSessionId: sessionId,
         redirectTarget: "_popup",
       };
+      cashfree = await initializeSDK();
       await cashfree.checkout(checkoutOptions);
       await verifyPayment(orderId, itemsId);
       return;
