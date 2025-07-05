@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { clearAlert, setAlert } from "@/redux/slices/AlertReducer";
+import { useDispatch } from "react-redux";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,8 +17,11 @@ export default function ContactForm() {
   const [message, setMessage] = useState("");
   const router = useRouter();
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/contact-us`,
@@ -36,19 +41,27 @@ export default function ContactForm() {
       );
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
+        dispatch(setAlert({ message: data.message, type: data.type }));
+        setName("")
+        setEmail("")
+        setSubject("")
+        setMessage("")
       }
       if (!res.ok) {
-        const data = await res.json();
-        console.log(data);
+        const data = await res.json();    
+        dispatch(setAlert({ message: data.message, type: data.type }));
       }
+      setTimeout(() => {
+        dispatch(clearAlert());
+        setIsSubmitting(false)
+      }, 2500);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={`${isSubmitting? "pointer-events-none" : ""}`}>
       <div className="space-y-2 mb-3">
         <Label htmlFor="name">Name</Label>
         <Input
@@ -57,6 +70,7 @@ export default function ContactForm() {
           name="name"
           required
           placeholder="Your Name"
+          value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </div>
@@ -67,6 +81,7 @@ export default function ContactForm() {
           id="email"
           name="email"
           required
+          value={email}
           placeholder="example@email.com"
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -78,6 +93,7 @@ export default function ContactForm() {
           id="subject"
           name="subject"
           required
+          value={subject}
           placeholder="What is this regarding?"
           onChange={(e) => setSubject(e.target.value)}
         />
@@ -90,13 +106,14 @@ export default function ContactForm() {
           rows={5}
           className="resize-none"
           required
+          value={message}
           placeholder="Tell us What You Need?"
           onChange={(e) => setMessage(e.target.value)}
         />
       </div>
 
-      <Button type="submit" className="float-right">
-        Submit
+      <Button disabled={isSubmitting} type="submit" className="float-right">
+        {isSubmitting ? "Submiting..." : "Submit"}
       </Button>
     </form>
   );
