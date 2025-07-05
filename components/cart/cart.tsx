@@ -71,7 +71,7 @@ const cart = () => {
   let cashfree: any;
   var initializeSDK = async function () {
     cashfree = await load({
-      mode: "sandbox",
+      mode: "production",
     });
   };
   initializeSDK();
@@ -146,12 +146,11 @@ const cart = () => {
   const handleClick = async (price: number, itemsId: any) => {
     try {
       let session = await getSessionId(price);
-      console.log(session)
       if (!session) return;
       const { sessionId, orderId } = session;
       let checkoutOptions = {
         paymentSessionId: sessionId,
-        redirectTarget: "_modal",
+        redirectTarget: "self",
       };
       await cashfree.checkout(checkoutOptions);
       await verifyPayment(orderId, itemsId);
