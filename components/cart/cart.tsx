@@ -150,7 +150,7 @@ const cart = () => {
       const { sessionId, orderId } = session;
       let checkoutOptions = {
         paymentSessionId: sessionId,
-        redirectTarget: "_self",
+        redirectTarget: "_modal",
       };
    
       await cashfree.checkout(checkoutOptions);
