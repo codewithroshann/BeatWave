@@ -269,10 +269,7 @@ const page = () => {
             </div>
             <div>
               <p className="text-2xl font-bold">
-                {AvailableDownloads.reduce(
-                  (acc, beat: any) => acc + beat.beats.length,
-                  0
-                )}
+                {AvailableDownloads.length}
               </p>
               <p className="text-gray-400 text-sm">Available Downloads</p>
             </div>
