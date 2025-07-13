@@ -49,7 +49,7 @@ export function BeatCard({ beat }: BeatCardProps) {
 
   return (
     <Card
-      className="overflow-hidden transition-all duration-300 hover:shadow-lg relative "
+      className={`overflow-hidden transition-all duration-300 hover:shadow-lg relative ${beat.isPurchased===true?"hidden":""} `}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -111,13 +111,17 @@ export function BeatCard({ beat }: BeatCardProps) {
           <FaRupeeSign className="text-sm inline" />
           {beat.price}
         </div>
-        <Button
+   <Button
           size="sm"
           className="gap-1"
           onClick={() => router.push(`/beat/${beat._id}`)}
+          disabled={beat.isPurchased===true}
         >
-          <ShoppingCart className="h-4 w-4 " />
-         
+          {beat.isPurchased===true ? (
+            <span className="text-sm font-bold text-red-600">Sold Out</span>
+          ) : (
+            <ShoppingCart className="h-4 w-4" />
+          )}
         </Button>
       </CardFooter>
     </Card>
